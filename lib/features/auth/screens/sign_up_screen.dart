@@ -1,8 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oru_mobiles/features/auth/widgets/auth_header_widget.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
-import 'package:oru_mobiles/ui/custom_button.dart';
-import 'package:oru_mobiles/ui/custom_text_field.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class SignUpScreen extends StatefulWidget {
@@ -48,18 +46,6 @@ class _SignUpScreenState extends State<SignUpScreen> {
                   title: 'Welcome',
                   subtitle: 'Sign up to continue',
                 ),
-                CustomSpacers.height100,
-                CustomTextField(
-                  controller: _nameTC,
-                  title: 'Please Tell Us Your Name *',
-                  hintText: 'Name',
-                ),
-                CustomSpacers.height100,
-                CustomButton.icon(
-                  strButtonText: 'Confirm Name',
-                  buttonAction: () {},
-                  icon: const Icon(Icons.arrow_forward, color: Colors.white),
-                )
               ],
             ),
           ),

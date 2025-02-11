@@ -8,8 +8,16 @@ import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 enum LoginWidgetType { bottomSheet, pageWidget }
 
+extension LoginWidgetTypeExtension on LoginWidgetType {
+  bool get isPageWidget {
+    return this == LoginWidgetType.pageWidget;
+  }
+}
+
 class LoginWidget extends StatefulWidget {
-  const LoginWidget({super.key});
+  final LoginWidgetType? loginWidgetType;
+  const LoginWidget(
+      {super.key, this.loginWidgetType = LoginWidgetType.pageWidget});
 
   @override
   State<LoginWidget> createState() => _LoginWidgetState();
@@ -26,31 +34,36 @@ class _LoginWidgetState extends State<LoginWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      children: [
-        CustomTextField(
-          controller: _phoneTC,
-          title: 'Enter Your Phone Number',
-          hintText: 'Mobile Number',
-          prefix: Text(
-            '+91',
-            style: AppTextThemes.of(context)
-                .bodyMedium
-                ?.copyWith(color: ColorPalette.darktext),
+    return Container(
+      color: ColorPalette.white,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          CustomTextField(
+            controller: _phoneTC,
+            title: 'Enter Your Phone Number',
+            hintText: 'Mobile Number',
+            prefix: Text(
+              '+91',
+              style: AppTextThemes.of(context)
+                  .bodyMedium
+                  ?.copyWith(color: ColorPalette.darktext),
+            ),
           ),
-        ),
-        CustomSpacers.height120,
-        const TermsAndConditionWidget(),
-        CustomSpacers.height16,
-        CustomButton.icon(
-          buttonAction: () {},
-          strButtonText: 'Next',
-          icon: const Icon(
-            Icons.arrow_forward,
-            color: ColorPalette.white,
+          if (!widget.loginWidgetType!.isPageWidget) CustomSpacers.height16,
+          if (widget.loginWidgetType!.isPageWidget) CustomSpacers.height120,
+          const TermsAndConditionWidget(),
+          CustomSpacers.height16,
+          CustomButton.icon(
+            buttonAction: () {},
+            strButtonText: 'Next',
+            icon: const Icon(
+              Icons.arrow_forward,
+              color: ColorPalette.white,
+            ),
           ),
-        ),
-      ],
+        ],
+      ),
     );
   }
 }

@@ -3,6 +3,7 @@ import 'dart:async';
 import 'package:flutter/material.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/features/auth/utils/auth_validators.dart';
+import 'package:oru_mobiles/features/auth/widgets/verification_text_widget.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/themes/pin_put_themes.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
@@ -11,8 +12,15 @@ import 'package:pinput/pinput.dart';
 
 enum OtpWidgetType { bottomSheet, pageWidget }
 
+extension OtpWidgetTypeExtension on OtpWidgetType {
+  bool get isPageWidget {
+    return this == OtpWidgetType.pageWidget;
+  }
+}
+
 class OtpWidget extends StatefulWidget {
-  const OtpWidget({super.key});
+  final OtpWidgetType? otpWidgetType;
+  const OtpWidget({super.key, this.otpWidgetType = OtpWidgetType.pageWidget});
 
   @override
   State<OtpWidget> createState() => _OtpWidgetState();
@@ -27,8 +35,8 @@ class _OtpWidgetState extends State<OtpWidget> {
   void _startCounter() {
     _timer = Timer.periodic(const Duration(seconds: 1), (timer) {
       _counter--;
-      if (_counter < 0) {
-        _timer.cancel(); // Stop the timer when it reaches 0
+      if (_counter <= 0) {
+        _timer.cancel();
       }
       _counterStream.add(_counter);
     });
@@ -51,7 +59,13 @@ class _OtpWidgetState extends State<OtpWidget> {
   @override
   Widget build(BuildContext context) {
     return Column(
+      mainAxisSize: MainAxisSize.min,
       children: [
+        if (!widget.otpWidgetType!.isPageWidget) ...[
+          CustomSpacers.height10,
+          VerificationTextWidget(),
+          CustomSpacers.height10
+        ],
         _buildOtpField(),
         CustomSpacers.height20,
         Text(
@@ -75,7 +89,8 @@ class _OtpWidgetState extends State<OtpWidget> {
             _buildTryAgainText(),
           ],
         ),
-        CustomSpacers.height100,
+        if (widget.otpWidgetType!.isPageWidget) CustomSpacers.height100,
+        if (!widget.otpWidgetType!.isPageWidget) CustomSpacers.height20,
         CustomButton(
           strButtonText: 'Verfiy OTP',
           buttonAction: () {},

@@ -25,6 +25,9 @@ class ScaffoldHelper {
           required String title}) =>
       showModalBottomSheet(
         isScrollControlled: true,
+        // constraints: BoxConstraints(
+        //   maxHeight: MediaQuery.of(context).size.height * 0.5,
+        // ),
         backgroundColor: ColorPalette.white,
         context: context,
         shape: const RoundedRectangleBorder(
@@ -33,47 +36,56 @@ class ScaffoldHelper {
             topRight: Radius.circular(8),
           ),
         ),
-        builder: (context) => Column(
-          mainAxisSize: MainAxisSize.min,
-          children: [
-            Container(
-              height: 64.h,
-              width: double.infinity,
-              padding: const EdgeInsets.symmetric(horizontal: 16),
-              decoration: BoxDecoration(
-                color: Colors.white,
-                borderRadius: const BorderRadius.only(
-                  topLeft: Radius.circular(8),
-                  topRight: Radius.circular(8),
-                ),
-                boxShadow: [
-                  BoxShadow(
-                    color: Colors.black.withOpacity(0.06), // Shadow color
-                    offset: Offset(0, 2), // Shadow position
-                    blurRadius: 2, // Shadow blur radius
-                    spreadRadius: 0, // Shadow spread radius
+        builder: (context) => Padding(
+          padding: EdgeInsets.only(
+            bottom: MediaQuery.of(context).viewInsets.bottom,
+          ),
+          child: Column(
+            mainAxisSize: MainAxisSize.min,
+            children: [
+              Container(
+                height: 64.h,
+                width: double.infinity,
+                padding: const EdgeInsets.symmetric(horizontal: 16),
+                decoration: BoxDecoration(
+                  color: Colors.white.withOpacity(.8),
+                  borderRadius: const BorderRadius.only(
+                    topLeft: Radius.circular(8),
+                    topRight: Radius.circular(8),
                   ),
-                ],
-              ),
-              child: Row(
-                children: [
-                  Text(
-                    title,
-                    style: AppTextThemes.of(context).bodyMedium,
-                  ),
-                  const Spacer(),
-                  InkWell(
-                    child: const Icon(
-                      Icons.close,
-                      color: ColorPalette.darktext,
+                  boxShadow: [
+                    BoxShadow(
+                      color: Colors.black.withOpacity(0.06), // Shadow color
+                      offset: Offset(0, 2), // Shadow position
+                      blurRadius: 2, // Shadow blur radius
+                      spreadRadius: 0, // Shadow spread radius
                     ),
-                    onTap: () => Navigator.pop(context),
-                  ),
-                ],
+                  ],
+                ),
+                child: Row(
+                  children: [
+                    Text(
+                      title,
+                      style: AppTextThemes.of(context).bodyMedium,
+                    ),
+                    const Spacer(),
+                    InkWell(
+                      child: const Icon(
+                        Icons.close,
+                        color: ColorPalette.darktext,
+                      ),
+                      onTap: () => Navigator.pop(context),
+                    ),
+                  ],
+                ),
               ),
-            ),
-            child,
-          ],
+              Container(
+                padding: const EdgeInsets.all(16),
+                color: ColorPalette.white,
+                child: SingleChildScrollView(child: child),
+              ),
+            ],
+          ),
         ),
       );
 
