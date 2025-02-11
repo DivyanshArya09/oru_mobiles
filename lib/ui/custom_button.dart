@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
+// import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/constants/figma_constants.dart';
 import 'package:oru_mobiles/ui/molecules/bouncing_widget.dart';
 
@@ -24,10 +25,10 @@ class CustomButton extends StatelessWidget {
       required this.strButtonText,
       required this.buttonAction,
       this.dCornerRadius = BUTTON_BORDER_RADIUS,
-      this.borderColor = ColorPalatte.primary,
+      this.borderColor = ColorPalette.primary,
       this.isLoading = false,
-      this.bgColor = ColorPalatte.primary,
-      this.textColor = ColorPalatte.white,
+      this.bgColor = ColorPalette.primary,
+      this.textColor = ColorPalette.white,
       this.isDisabled = false,
       this.buttonTextAlignment = TextAlign.center,
       this.dHeight = BUTTON_HEIGHT,
@@ -40,10 +41,10 @@ class CustomButton extends StatelessWidget {
   factory CustomButton.icon({
     String strButtonText = '',
     required VoidCallback buttonAction,
-    Color borderColor = ColorPalatte.lightGrey,
+    Color borderColor = ColorPalette.lightGrey,
     required Icon icon,
-    Color bgColor = ColorPalatte.primary,
-    Color textColor = ColorPalatte.white,
+    Color bgColor = ColorPalette.primary,
+    Color textColor = ColorPalette.white,
     double? borderRaduis = BUTTON_BORDER_RADIUS,
   }) {
     return CustomButton(
@@ -91,7 +92,7 @@ class CustomButton extends StatelessWidget {
                       textAlign: buttonTextAlignment,
                       style: isDisabled
                           ? textStyle?.copyWith(
-                              color: ColorPalatte.white.withOpacity(.4),
+                              color: ColorPalette.white.withOpacity(.4),
                             )
                           : textStyle,
                     ),
