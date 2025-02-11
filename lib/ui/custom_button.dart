@@ -33,18 +33,22 @@ class CustomButton extends StatelessWidget {
       this.buttonTextAlignment = TextAlign.center,
       this.dHeight = BUTTON_HEIGHT,
       this.buttonIcon,
-      this.textStyle,
+      this.textStyle = const TextStyle(
+        fontSize: 18,
+        fontWeight: FontWeight.w600,
+        // height: 27,
+        color: ColorPalette.white,
+      ),
       this.icon,
       this.mainAxisAlignment = MainAxisAlignment.spaceAround})
       : super(key: key);
 
   factory CustomButton.icon({
-    String strButtonText = '',
+    required String strButtonText,
     required VoidCallback buttonAction,
     Color borderColor = ColorPalette.lightGrey,
     required Icon icon,
     Color bgColor = ColorPalette.primary,
-    Color textColor = ColorPalette.white,
     double? borderRaduis = BUTTON_BORDER_RADIUS,
   }) {
     return CustomButton(
@@ -53,9 +57,6 @@ class CustomButton extends StatelessWidget {
       buttonIcon: icon,
       icon: icon,
       bgColor: bgColor,
-      textColor: textColor,
-      // textStyle: AppTextStyles.primaryBtnTextStyle
-      //     .copyWith(color: textColor, fontWeight: FontWeight.w600),
       dCornerRadius: borderRaduis!,
       borderColor: borderColor,
     );
@@ -63,42 +64,44 @@ class CustomButton extends StatelessWidget {
 
   Widget _buildPrimary() {
     return Container(
-        height: dHeight,
-        decoration: BoxDecoration(
-          color: isDisabled ? bgColor.withOpacity(.3) : bgColor,
-          borderRadius: BorderRadius.circular(dCornerRadius),
-          border: isDisabled ? null : Border.all(color: borderColor, width: 1),
-        ),
-        child: Padding(
-          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
-          child: Row(
-            mainAxisAlignment: MainAxisAlignment.center,
-            children: <Widget>[
-              if (icon != null)
-                Container(
-                    color: Colors.transparent,
-                    margin: const EdgeInsets.only(right: 10),
-                    child: buttonIcon!),
-              isLoading
-                  ? const SizedBox(
-                      height: 25,
-                      width: 25,
-                      child: CircularProgressIndicator(
-                        color: Colors.white,
-                      ),
-                    )
-                  : Text(
-                      strButtonText,
-                      textAlign: buttonTextAlignment,
-                      style: isDisabled
-                          ? textStyle?.copyWith(
-                              color: ColorPalette.white.withOpacity(.4),
-                            )
-                          : textStyle,
+      height: dHeight,
+      decoration: BoxDecoration(
+        color: isDisabled ? bgColor.withOpacity(.3) : bgColor,
+        borderRadius: BorderRadius.circular(dCornerRadius),
+        border: isDisabled ? null : Border.all(color: borderColor, width: 1),
+      ),
+      child: Padding(
+        padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
+        child: Row(
+          mainAxisAlignment: MainAxisAlignment.center,
+          children: <Widget>[
+            isLoading
+                ? const SizedBox(
+                    height: 25,
+                    width: 25,
+                    child: CircularProgressIndicator(
+                      color: Colors.white,
                     ),
-            ],
-          ),
-        ));
+                  )
+                : Text(
+                    strButtonText,
+                    textAlign: buttonTextAlignment,
+                    style: isDisabled
+                        ? textStyle?.copyWith(
+                            color: ColorPalette.white.withOpacity(.4),
+                          )
+                        : textStyle,
+                  ),
+            if (icon != null)
+              Container(
+                color: Colors.transparent,
+                margin: const EdgeInsets.only(left: 10),
+                child: buttonIcon!,
+              ),
+          ],
+        ),
+      ),
+    );
   }
 
   @override

@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/figma_constants.dart';
-import 'package:oru_mobiles/features/home/screens/home_screen.dart';
+import 'package:oru_mobiles/features/auth/screens/sign_in_screen.dart';
 import 'package:oru_mobiles/themes/app_themes.dart';
 
 void main() {
@@ -16,9 +16,10 @@ class MyApp extends StatelessWidget {
     return ScreenUtilInit(
       designSize: const Size(VALUE_FIGMA_WIDTH, VALUE_FIGMA_HEIGHT),
       builder: (context, child) => MaterialApp(
+        debugShowCheckedModeBanner: false,
         title: 'Oru Mobiles',
         theme: AppThemes.lightTheme,
-        home: const HomeScreen(),
+        home: const SignInScreen(),
       ),
     );
   }

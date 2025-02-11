@@ -2,7 +2,6 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
-import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class CustomTextField extends StatelessWidget {
   final TextEditingController controller;
@@ -31,7 +30,6 @@ class CustomTextField extends StatelessWidget {
                 color: ColorPalette.darktext,
               ),
         ),
-        CustomSpacers.height6,
         TextFormField(
           controller: controller,
           style: inputTextStyle,
@@ -41,7 +39,10 @@ class CustomTextField extends StatelessWidget {
               vertical: 15.h,
             ),
             hintText: hintText,
-            prefix: prefix,
+            prefixIcon: Padding(
+              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 16),
+              child: prefix,
+            ),
             suffix: suffix,
           ),
         ),
