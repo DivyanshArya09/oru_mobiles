@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/figma_constants.dart';
-import 'package:oru_mobiles/features/auth/screens/sample_screen.dart';
+import 'package:oru_mobiles/features/onboarding/presentation/splash_screen.dart';
 import 'package:oru_mobiles/themes/app_themes.dart';
 
 void main() {
@@ -19,7 +19,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Oru Mobiles',
         theme: AppThemes.lightTheme,
-        home: const SampleScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

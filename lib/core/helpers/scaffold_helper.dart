@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
+import 'package:oru_mobiles/features/home/screens/home_screen.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 
 enum SnakBarType { success, error, info }
@@ -19,6 +20,10 @@ extension SnackBarTypeExtension on SnakBarType {
 }
 
 class ScaffoldHelper {
+  static toggleDrawer() {
+    scaffoldKey.currentState!.openDrawer();
+  }
+
   static Future<void> showBottomSheet(
           {required BuildContext context,
           required Widget child,
