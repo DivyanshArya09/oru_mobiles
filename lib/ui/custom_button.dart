@@ -1,0 +1,116 @@
+import 'package:flutter/material.dart';
+import 'package:oru_mobiles/core/constants/color_palatte.dart';
+import 'package:oru_mobiles/core/constants/figma_constants.dart';
+import 'package:oru_mobiles/ui/molecules/bouncing_widget.dart';
+
+class CustomButton extends StatelessWidget {
+  final String strButtonText;
+  final bool isDisabled;
+  final VoidCallback buttonAction;
+  final double dCornerRadius;
+  final bool isLoading;
+  final double dHeight;
+  final Color borderColor;
+  final Color bgColor;
+  final Color textColor;
+  final TextAlign buttonTextAlignment;
+  final Widget? buttonIcon;
+  final MainAxisAlignment mainAxisAlignment;
+  final TextStyle? textStyle;
+  final Icon? icon;
+
+  const CustomButton(
+      {Key? key,
+      required this.strButtonText,
+      required this.buttonAction,
+      this.dCornerRadius = BUTTON_BORDER_RADIUS,
+      this.borderColor = ColorPalatte.primary,
+      this.isLoading = false,
+      this.bgColor = ColorPalatte.primary,
+      this.textColor = ColorPalatte.white,
+      this.isDisabled = false,
+      this.buttonTextAlignment = TextAlign.center,
+      this.dHeight = BUTTON_HEIGHT,
+      this.buttonIcon,
+      this.textStyle,
+      this.icon,
+      this.mainAxisAlignment = MainAxisAlignment.spaceAround})
+      : super(key: key);
+
+  factory CustomButton.icon({
+    String strButtonText = '',
+    required VoidCallback buttonAction,
+    Color borderColor = ColorPalatte.lightGrey,
+    required Icon icon,
+    Color bgColor = ColorPalatte.primary,
+    Color textColor = ColorPalatte.white,
+    double? borderRaduis = BUTTON_BORDER_RADIUS,
+  }) {
+    return CustomButton(
+      strButtonText: strButtonText,
+      buttonAction: buttonAction,
+      buttonIcon: icon,
+      icon: icon,
+      bgColor: bgColor,
+      textColor: textColor,
+      // textStyle: AppTextStyles.primaryBtnTextStyle
+      //     .copyWith(color: textColor, fontWeight: FontWeight.w600),
+      dCornerRadius: borderRaduis!,
+      borderColor: borderColor,
+    );
+  }
+
+  Widget _buildPrimary() {
+    return Container(
+        height: dHeight,
+        decoration: BoxDecoration(
+          color: isDisabled ? bgColor.withOpacity(.3) : bgColor,
+          borderRadius: BorderRadius.circular(dCornerRadius),
+          border: isDisabled ? null : Border.all(color: borderColor, width: 1),
+        ),
+        child: Padding(
+          padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
+          child: Row(
+            mainAxisAlignment: MainAxisAlignment.center,
+            children: <Widget>[
+              if (icon != null)
+                Container(
+                    color: Colors.transparent,
+                    margin: const EdgeInsets.only(right: 10),
+                    child: buttonIcon!),
+              isLoading
+                  ? const SizedBox(
+                      height: 25,
+                      width: 25,
+                      child: CircularProgressIndicator(
+                        color: Colors.white,
+                      ),
+                    )
+                  : Text(
+                      strButtonText,
+                      textAlign: buttonTextAlignment,
+                      style: isDisabled
+                          ? textStyle?.copyWith(
+                              color: ColorPalatte.white.withOpacity(.4),
+                            )
+                          : textStyle,
+                    ),
+            ],
+          ),
+        ));
+  }
+
+  @override
+  Widget build(BuildContext context) {
+    return BouncingWidget(
+      duration: const Duration(milliseconds: 180),
+      scaleFactor: 1.5,
+      onPressed: () {
+        if (!isLoading) {
+          buttonAction();
+        }
+      },
+      child: _buildPrimary(),
+    );
+  }
+}
