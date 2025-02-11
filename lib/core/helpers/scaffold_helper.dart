@@ -1,4 +1,7 @@
 import 'package:flutter/material.dart';
+import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oru_mobiles/core/constants/color_palatte.dart';
+import 'package:oru_mobiles/themes/app_text_themes.dart';
 
 enum SnakBarType { success, error, info }
 
@@ -21,6 +24,8 @@ class ScaffoldHelper {
           required Widget child,
           required String title}) =>
       showModalBottomSheet(
+        isScrollControlled: true,
+        backgroundColor: ColorPalette.white,
         context: context,
         shape: const RoundedRectangleBorder(
           borderRadius: BorderRadius.only(
@@ -32,24 +37,39 @@ class ScaffoldHelper {
           mainAxisSize: MainAxisSize.min,
           children: [
             Container(
-              padding: const EdgeInsets.all(16),
+              height: 64.h,
+              width: double.infinity,
+              padding: const EdgeInsets.symmetric(horizontal: 16),
               decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: const BorderRadius.only(
-                    topLeft: Radius.circular(8),
-                    topRight: Radius.circular(8),
+                color: Colors.white,
+                borderRadius: const BorderRadius.only(
+                  topLeft: Radius.circular(8),
+                  topRight: Radius.circular(8),
+                ),
+                boxShadow: [
+                  BoxShadow(
+                    color: Colors.black.withOpacity(0.06), // Shadow color
+                    offset: Offset(0, 2), // Shadow position
+                    blurRadius: 2, // Shadow blur radius
+                    spreadRadius: 0, // Shadow spread radius
                   ),
-                  boxShadow: [
-                    BoxShadow(
-                      color: Colors.grey.withOpacity(0.5),
-                      spreadRadius: 5,
-                      blurRadius: 7,
-                      offset: const Offset(0, 3),
+                ],
+              ),
+              child: Row(
+                children: [
+                  Text(
+                    title,
+                    style: AppTextThemes.of(context).bodyMedium,
+                  ),
+                  const Spacer(),
+                  InkWell(
+                    child: const Icon(
+                      Icons.close,
+                      color: ColorPalette.darktext,
                     ),
-                  ]),
-              child: Text(
-                title,
-                style: const TextStyle(fontWeight: FontWeight.bold),
+                    onTap: () => Navigator.pop(context),
+                  ),
+                ],
               ),
             ),
             child,

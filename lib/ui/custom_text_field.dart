@@ -39,10 +39,13 @@ class CustomTextField extends StatelessWidget {
               vertical: 15.h,
             ),
             hintText: hintText,
-            prefixIcon: Padding(
-              padding: EdgeInsets.symmetric(vertical: 15.h, horizontal: 16),
-              child: prefix,
-            ),
+            prefixIcon: prefix == null
+                ? null
+                : Padding(
+                    padding:
+                        EdgeInsets.symmetric(vertical: 15.h, horizontal: 16),
+                    child: prefix,
+                  ),
             suffix: suffix,
           ),
         ),

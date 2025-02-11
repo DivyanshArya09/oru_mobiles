@@ -18,7 +18,7 @@ class TextFieldTheme {
     focusedBorder: OutlineInputBorder(
       borderRadius: BorderRadius.circular(4),
       borderSide: const BorderSide(
-        color: ColorPalette.primary, // Using primary color
+        color: ColorPalette.borderColor, // Using primary color
       ),
     ),
     errorBorder: OutlineInputBorder(
