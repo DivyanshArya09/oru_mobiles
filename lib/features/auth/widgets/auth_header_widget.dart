@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
+import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class AuthHeaderWidget extends StatelessWidget {
   final String title;
@@ -31,7 +32,7 @@ class AuthHeaderWidget extends StatelessWidget {
                 ?.copyWith(color: ColorPalette.lightGrey, height: 0),
           ),
         ],
-        if (subTitleWidget != null) ...[subTitleWidget!]
+        if (subTitleWidget != null) ...[CustomSpacers.height8, subTitleWidget!]
       ],
     );
   }
