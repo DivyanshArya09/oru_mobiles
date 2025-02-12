@@ -24,6 +24,7 @@ class _CustomSideBarState extends State<CustomSideBar> {
   @override
   Widget build(BuildContext context) {
     return Drawer(
+      backgroundColor: ColorPalette.white,
       width: MediaQuery.of(context).size.width,
       child: SizedBox(
         height: MediaQuery.of(context).size.height,
@@ -32,7 +33,7 @@ class _CustomSideBarState extends State<CustomSideBar> {
             Container(
               margin: EdgeInsets.only(top: 42.h),
               padding: EdgeInsets.all(12.w),
-              color: ColorPalette.lightGrey.withOpacity(.23),
+              color: ColorPalette.borderColorLight.withOpacity(.6),
               width: double.infinity,
               // height: 60.h,
               alignment: Alignment.center,
@@ -141,7 +142,7 @@ class _CustomSideBarState extends State<CustomSideBar> {
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
               border: Border.all(
-                color: ColorPalette.lightGrey,
+                color: ColorPalette.borderColorLight,
               ),
             ),
             child: InkWell(

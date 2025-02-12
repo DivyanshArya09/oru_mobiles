@@ -53,6 +53,8 @@ class CustomTextField extends StatelessWidget {
           style: inputTextStyle,
           keyboardType: keyboardType,
           decoration: InputDecoration(
+            fillColor: ColorPalette.white,
+            filled: true,
             counterText: '',
             enabledBorder: _getborder(raduis!),
             focusedBorder: _getborder(raduis!),

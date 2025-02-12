@@ -52,7 +52,7 @@ class WhatsOnYourMindWidget extends StatelessWidget {
             width: 72.h,
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
-              color: ColorPalette.borderColorLight,
+              color: ColorPalette.lightestGrey,
             ),
           ),
           CustomSpacers.height8,

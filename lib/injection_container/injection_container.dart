@@ -6,12 +6,17 @@ import 'package:oru_mobiles/features/auth/data/repositories/auth_repository.dart
 import 'package:oru_mobiles/features/auth/domain/usecases/generate_otp_use_case.dart';
 import 'package:oru_mobiles/features/auth/domain/usecases/validate_otp_use_case.dart';
 import 'package:oru_mobiles/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:oru_mobiles/features/home/data/data_sources/home_remote_data_sources.dart';
+import 'package:oru_mobiles/features/home/data/repository/home_repositiry.dart';
+import 'package:oru_mobiles/features/home/domain/usecases/get_mobile_brands_use_case.dart';
+import 'package:oru_mobiles/features/home/presentation/bloc/home_bloc.dart';
 
 final sl = GetIt.instance;
 
 Future<void> init() async {
   general();
   auth();
+  home();
 }
 
 void auth() {
@@ -38,6 +43,29 @@ void auth() {
     () => AuthBloc(
       generateOtpUseCase: sl(),
       validateOtpUseCase: sl(),
+    ),
+  );
+}
+
+void home() {
+  sl.registerLazySingleton<HomeRepository>(
+    () => HomeRepository(
+      dataSources: sl(),
+      networkInfo: sl(),
+    ),
+  );
+  sl.registerLazySingleton(
+    () => HomeRemoteDataSources(),
+  );
+  sl.registerLazySingleton(
+    () => GetMobileBrandsUseCase(
+      homeRepository: sl(),
+    ),
+  );
+
+  sl.registerFactory(
+    () => HomeBloc(
+      getMobileBrandsUseCase: sl(),
     ),
   );
 }
