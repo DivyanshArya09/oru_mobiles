@@ -13,4 +13,8 @@ class AppAssets {
   static String privacyPolicy = 'assets/icons/privacyPolicy.svg';
   static String saveMoneyIcon = 'assets/icons/saveMoney.svg';
   static String logoutIcon = 'assets/icons/logout.svg';
+
+  //! Home assets
+  static String homeBanner = 'assets/images/Phone Banners.png';
+  static String bagIcon = 'assets/icons/bag.svg';
 }

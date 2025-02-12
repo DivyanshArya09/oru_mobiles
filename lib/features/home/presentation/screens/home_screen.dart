@@ -4,6 +4,8 @@ import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/cutom_side_bar.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/home_page_banner_widget.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/horizontal_chip_list.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
 import 'package:oru_mobiles/ui/custom_text_field.dart';
@@ -19,6 +21,14 @@ class HomeScreen extends StatefulWidget {
 }
 
 class _HomeScreenState extends State<HomeScreen> {
+  late TextEditingController _searchTC;
+
+  @override
+  void initState() {
+    _searchTC = TextEditingController();
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Scaffold(
@@ -31,10 +41,11 @@ class _HomeScreenState extends State<HomeScreen> {
           children: [
             CustomTextField(
               raduis: 12,
-              controller: TextEditingController(),
+              borderColor: ColorPalette.borderColorLight,
+              controller: _searchTC,
               hintText: 'Search phones with make, model...',
               prefix: const Icon(
-                color: ColorPalette.lightGrey,
+                color: ColorPalette.borderColorLight,
                 Icons.search,
               ),
               suffix: const SizedBox(
@@ -58,6 +69,10 @@ class _HomeScreenState extends State<HomeScreen> {
                 ),
               ),
             ),
+            CustomSpacers.height10,
+            const HorizontalChipList(),
+            CustomSpacers.height20,
+            const HomePageBannerWidget(),
           ],
         ),
       ),

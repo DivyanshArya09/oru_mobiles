@@ -10,9 +10,11 @@ class CustomTextField extends StatelessWidget {
   final String? hintText;
   final double? raduis;
   final EdgeInsets? contentPadding;
+  final Color? borderColor;
   const CustomTextField({
     super.key,
     required this.controller,
+    this.borderColor = ColorPalette.borderColor,
     this.title,
     this.contentPadding =
         const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
@@ -65,8 +67,8 @@ class CustomTextField extends StatelessWidget {
   OutlineInputBorder _getborder(double borderRaduis) {
     return OutlineInputBorder(
       borderRadius: BorderRadius.circular(borderRaduis),
-      borderSide: const BorderSide(
-        color: ColorPalette.borderColor,
+      borderSide: BorderSide(
+        color: borderColor!,
       ),
     );
   }
