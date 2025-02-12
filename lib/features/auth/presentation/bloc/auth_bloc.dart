@@ -13,8 +13,8 @@ class AuthBloc extends Cubit<AuthState> {
         super(AuthInitial());
 
   Future<void> generateOtp(GenerateOtpEntity entity) async {
+    emit(AuthLoadingState());
     final result = await _generateOtpUseCase.call(entity);
-
     result.fold(
       (l) => emit(
         AuthErrorState(

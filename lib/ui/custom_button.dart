@@ -55,6 +55,8 @@ class CustomButton extends StatelessWidget {
     Color bgColor = ColorPalette.primary,
     double? borderRadius = BUTTON_BORDER_RADIUS,
     ButtonType buttonType = ButtonType.primary,
+    bool? isLoading = false,
+    bool? isDisabled = false,
   }) {
     return CustomButton(
       strButtonText: strButtonText,
@@ -65,6 +67,8 @@ class CustomButton extends StatelessWidget {
       dCornerRadius: borderRadius!,
       borderColor: borderColor,
       buttonType: buttonType,
+      isLoading: isLoading!,
+      isDisabled: isDisabled!,
     );
   }
 
@@ -98,7 +102,7 @@ class CustomButton extends StatelessWidget {
         color: isDisabled ? bgColor.withOpacity(.3) : bgColor,
         borderRadius: BorderRadius.circular(dCornerRadius),
         border: isDisabled ? null : Border.all(color: borderColor, width: 1),
-        boxShadow: _getShadow(bgColor),
+        // boxShadow: _getShadow(bgColor),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
@@ -173,6 +177,12 @@ class CustomButton extends StatelessWidget {
 
   @override
   Widget build(BuildContext context) {
+    if (isDisabled) {
+      return buttonType == ButtonType.primary
+          ? _buildPrimary()
+          : _buildSecondary();
+    }
+
     return BouncingWidget(
       duration: const Duration(milliseconds: 180),
       scaleFactor: 1.5,

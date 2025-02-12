@@ -4,7 +4,8 @@ import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class TermsAndConditionWidget extends StatefulWidget {
-  const TermsAndConditionWidget({super.key});
+  final Function(bool) onChanged;
+  const TermsAndConditionWidget({super.key, required this.onChanged});
 
   @override
   State<TermsAndConditionWidget> createState() =>
@@ -13,6 +14,13 @@ class TermsAndConditionWidget extends StatefulWidget {
 
 class _TermsAndConditionWidgetState extends State<TermsAndConditionWidget> {
   bool _isChecked = false;
+
+  @override
+  void initState() {
+    widget.onChanged(_isChecked);
+    super.initState();
+  }
+
   @override
   Widget build(BuildContext context) {
     return Row(
@@ -23,6 +31,7 @@ class _TermsAndConditionWidgetState extends State<TermsAndConditionWidget> {
             setState(
               () {
                 _isChecked = !_isChecked;
+                widget.onChanged(_isChecked);
               },
             );
           },

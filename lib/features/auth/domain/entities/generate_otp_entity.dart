@@ -5,8 +5,8 @@ class GenerateOtpEntity {
 
   Map<String, dynamic> toMap() {
     return {
-      'mobileNumber': mobileNumber,
-      'countryCode': countryCode,
+      'mobileNumber': int.parse(mobileNumber),
+      'countryCode': int.parse(countryCode),
     };
   }
 }

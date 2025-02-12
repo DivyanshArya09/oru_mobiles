@@ -1,10 +1,15 @@
+import 'dart:async';
+
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/figma_constants.dart';
-import 'package:oru_mobiles/features/home/presentation/screens/home_screen.dart';
+import 'package:oru_mobiles/core/managers/app_manager.dart';
+import 'package:oru_mobiles/features/auth/presentation/screens/sign_in_screen.dart';
 import 'package:oru_mobiles/themes/app_themes.dart';
 
-void main() {
+Future<void> main() async {
+  WidgetsFlutterBinding.ensureInitialized();
+  AppManager.initialize();
   runApp(const MyApp());
 }
 
@@ -19,7 +24,7 @@ class MyApp extends StatelessWidget {
         debugShowCheckedModeBanner: false,
         title: 'Oru Mobiles',
         theme: AppThemes.lightTheme,
-        home: const HomeScreen(),
+        home: const SignInScreen(),
       ),
     );
   }

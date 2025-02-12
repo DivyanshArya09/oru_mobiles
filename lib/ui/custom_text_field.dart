@@ -11,6 +11,10 @@ class CustomTextField extends StatelessWidget {
   final double? raduis;
   final EdgeInsets? contentPadding;
   final Color? borderColor;
+  final TextInputType? keyboardType;
+  final int? maxLength;
+  final String? Function(String?)? validator;
+  final Function(String?)? onChanged;
   const CustomTextField({
     super.key,
     required this.controller,
@@ -21,8 +25,12 @@ class CustomTextField extends StatelessWidget {
     this.prefix,
     this.suffix,
     this.raduis = 4,
+    this.validator,
+    this.onChanged,
     this.inputTextStyle,
     this.hintText,
+    this.keyboardType,
+    this.maxLength,
   });
 
   @override
@@ -38,9 +46,14 @@ class CustomTextField extends StatelessWidget {
                 ),
           ),
         TextFormField(
+          validator: validator,
+          onChanged: onChanged,
           controller: controller,
+          maxLength: maxLength,
           style: inputTextStyle,
+          keyboardType: keyboardType,
           decoration: InputDecoration(
+            counterText: '',
             enabledBorder: _getborder(raduis!),
             focusedBorder: _getborder(raduis!),
             errorBorder: _getborder(raduis!),
