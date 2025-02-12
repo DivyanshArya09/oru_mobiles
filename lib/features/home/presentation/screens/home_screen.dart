@@ -6,6 +6,8 @@ import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/cutom_side_bar.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/home_page_banner_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/horizontal_chip_list.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/top_brands_widget.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/what_on_your_mind_widget.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
 import 'package:oru_mobiles/ui/custom_text_field.dart';
@@ -38,6 +40,7 @@ class _HomeScreenState extends State<HomeScreen> {
       body: SingleChildScrollView(
         padding: const EdgeInsets.all(16.0),
         child: Column(
+          crossAxisAlignment: CrossAxisAlignment.start,
           children: [
             CustomTextField(
               raduis: 12,
@@ -73,6 +76,10 @@ class _HomeScreenState extends State<HomeScreen> {
             const HorizontalChipList(),
             CustomSpacers.height20,
             const HomePageBannerWidget(),
+            CustomSpacers.height20,
+            const WhatsOnYourMindWidget(),
+            CustomSpacers.height20,
+            const TopBrandsWidget(),
           ],
         ),
       ),

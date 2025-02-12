@@ -17,4 +17,6 @@ class AppAssets {
   //! Home assets
   static String homeBanner = 'assets/images/Phone Banners.png';
   static String bagIcon = 'assets/icons/bag.svg';
+  static String shopCircle = 'assets/icons/file 1.svg';
+  static String tagIcon = 'assets/icons/tag.svg';
 }
