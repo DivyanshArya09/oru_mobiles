@@ -3,7 +3,7 @@ import 'package:flutter_svg/flutter_svg.dart';
 import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
-import 'package:oru_mobiles/features/home/widgets/cutom_side_bar.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/cutom_side_bar.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
 import 'package:oru_mobiles/ui/custom_text_field.dart';

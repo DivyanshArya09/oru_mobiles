@@ -1,7 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
-import 'package:oru_mobiles/features/auth/widgets/auth_header_widget.dart';
-import 'package:oru_mobiles/features/auth/widgets/login_widget.dart';
+import 'package:oru_mobiles/features/auth/presentation/widgets/auth_header_widget.dart';
+import 'package:oru_mobiles/features/auth/presentation/widgets/login_widget.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 

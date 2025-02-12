@@ -116,7 +116,7 @@ class CustomButton extends StatelessWidget {
                     textAlign: buttonTextAlignment,
                     style: isDisabled
                         ? textStyle?.copyWith(
-                            color: ColorPalette.white.withOpacity(.4),
+                            color: textColor,
                           )
                         : textStyle,
                   ),

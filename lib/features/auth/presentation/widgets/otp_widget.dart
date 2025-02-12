@@ -2,8 +2,8 @@ import 'dart:async';
 
 import 'package:flutter/material.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
-import 'package:oru_mobiles/features/auth/utils/auth_validators.dart';
-import 'package:oru_mobiles/features/auth/widgets/verification_text_widget.dart';
+import 'package:oru_mobiles/features/auth/presentation/utils/auth_validators.dart';
+import 'package:oru_mobiles/features/auth/presentation/widgets/verification_text_widget.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/themes/pin_put_themes.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';

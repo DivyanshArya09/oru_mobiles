@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
-import 'package:oru_mobiles/features/auth/widgets/terms_and_condition_widget.dart';
+import 'package:oru_mobiles/features/auth/presentation/widgets/terms_and_condition_widget.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
 import 'package:oru_mobiles/ui/custom_text_field.dart';
