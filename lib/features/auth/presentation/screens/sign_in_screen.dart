@@ -2,6 +2,8 @@ import 'package:flutter/material.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/features/auth/presentation/widgets/auth_header_widget.dart';
 import 'package:oru_mobiles/features/auth/presentation/widgets/login_widget.dart';
+import 'package:oru_mobiles/routes/app_routes.dart';
+import 'package:oru_mobiles/routes/custom_navigator.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 
@@ -14,7 +16,8 @@ class SignInScreen extends StatelessWidget {
       appBar: AppBar(
         actions: [
           IconButton(
-            onPressed: () {},
+            onPressed: () =>
+                CustomNavigator.pushAndRemoveUntil(context, AppRouter.home),
             icon: const Icon(
               Icons.close,
               color: ColorPalette.darktext,

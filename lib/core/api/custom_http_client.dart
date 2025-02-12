@@ -25,8 +25,7 @@ class CustomHttpClient {
     } catch (e) {
       if (e is DioException) {
         if (e.response != null && e.response!.data != null) {
-          final errorMessage =
-              e.response!.data['message'] ?? 'An error occurred';
+          final errorMessage = e.response!.data['error'] ?? 'An error occurred';
           throw ApiException(message: errorMessage);
         }
       }
@@ -49,8 +48,7 @@ class CustomHttpClient {
     } catch (e) {
       if (e is DioException) {
         if (e.response != null && e.response!.data != null) {
-          final errorMessage =
-              e.response!.data['message'] ?? 'An error occurred';
+          final errorMessage = e.response!.data['error'] ?? 'An error occurred';
           throw ApiException(message: errorMessage);
         }
       }
@@ -75,8 +73,7 @@ class CustomHttpClient {
     } catch (e) {
       if (e is DioException) {
         if (e.response != null && e.response!.data != null) {
-          final errorMessage =
-              e.response!.data['message'] ?? 'An error occurred';
+          final errorMessage = e.response!.data['error'] ?? 'An error occurred';
           throw ApiException(message: errorMessage);
         }
       }
@@ -101,8 +98,7 @@ class CustomHttpClient {
     } catch (e) {
       if (e is DioException) {
         if (e.response != null && e.response!.data != null) {
-          final errorMessage =
-              e.response!.data['message'] ?? 'An error occurred';
+          final errorMessage = e.response!.data['error'] ?? 'An error occurred';
           throw ApiException(message: errorMessage);
         }
       }
@@ -125,8 +121,7 @@ class CustomHttpClient {
     } catch (e) {
       if (e is DioException) {
         if (e.response != null && e.response!.data != null) {
-          final errorMessage =
-              e.response!.data['message'] ?? 'An error occurred';
+          final errorMessage = e.response!.data['error'] ?? 'An error occurred';
           throw ApiException(message: errorMessage);
         }
       }
@@ -160,8 +155,7 @@ class CustomHttpClient {
     } catch (e) {
       if (e is DioException) {
         if (e.response != null && e.response!.data != null) {
-          final errorMessage =
-              e.response!.data['message'] ?? 'An error occurred';
+          final errorMessage = e.response!.data['error'] ?? 'An error occurred';
           throw ApiException(message: errorMessage);
         }
       }

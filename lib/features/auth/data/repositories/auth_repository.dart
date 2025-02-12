@@ -2,7 +2,9 @@ import 'package:dartz/dartz.dart';
 import 'package:oru_mobiles/core/errors/failures.dart';
 import 'package:oru_mobiles/core/network/network_info.dart';
 import 'package:oru_mobiles/features/auth/data/data_sources/auth_remote_data_sources.dart';
+import 'package:oru_mobiles/features/auth/data/models/user_model.dart';
 import 'package:oru_mobiles/features/auth/domain/entities/generate_otp_entity.dart';
+import 'package:oru_mobiles/features/auth/domain/entities/validate_otp_entity.dart';
 
 class AuthRepository {
   final NetworkInfo _networkInfo;
@@ -18,6 +20,20 @@ class AuthRepository {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _dataSources.genrateOTP(entity: entity);
+        return Right(response);
+      } catch (e) {
+        return Left(ServerFailure(message: e.toString()));
+      }
+    } else {
+      return const Left(InternetFailure());
+    }
+  }
+
+  Future<Either<Failure, UserModel>> validateOtp(
+      ValidateOtpEntity entity) async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _dataSources.validateOtp(entity: entity);
         return Right(response);
       } catch (e) {
         return Left(ServerFailure(message: e.toString()));

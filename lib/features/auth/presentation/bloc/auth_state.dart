@@ -21,3 +21,8 @@ final class AuthSuccessState extends AuthState {
   final String? message;
   const AuthSuccessState({this.message});
 }
+
+final class ValidateOtpSuccessState extends AuthState {
+  final UserModel user;
+  const ValidateOtpSuccessState({required this.user});
+}

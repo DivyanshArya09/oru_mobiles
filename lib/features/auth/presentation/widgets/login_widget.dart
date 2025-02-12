@@ -6,8 +6,12 @@ import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
 import 'package:oru_mobiles/features/auth/domain/entities/generate_otp_entity.dart';
 import 'package:oru_mobiles/features/auth/presentation/bloc/auth_bloc.dart';
+import 'package:oru_mobiles/features/auth/presentation/utils/auth_validators.dart';
+import 'package:oru_mobiles/features/auth/presentation/widgets/otp_widget.dart';
 import 'package:oru_mobiles/features/auth/presentation/widgets/terms_and_condition_widget.dart';
 import 'package:oru_mobiles/injection_container/injection_container.dart';
+import 'package:oru_mobiles/routes/app_routes.dart';
+import 'package:oru_mobiles/routes/custom_navigator.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
 import 'package:oru_mobiles/ui/custom_text_field.dart';
@@ -35,6 +39,7 @@ class _LoginWidgetState extends State<LoginWidget> {
   late StreamController<bool> _btnStream;
   late AuthBloc _bloc;
   bool isConditionChecked = false;
+  var _formKey = GlobalKey<FormState>();
 
   @override
   void initState() {
@@ -49,6 +54,7 @@ class _LoginWidgetState extends State<LoginWidget> {
     _phoneTC.dispose();
     _btnStream.close();
     _bloc.close();
+    _formKey.currentState?.dispose();
     super.dispose();
   }
 
@@ -66,6 +72,22 @@ class _LoginWidgetState extends State<LoginWidget> {
             message: state.message!,
             type: SnakBarType.success,
           );
+          if (widget.loginWidgetType!.isPageWidget) {
+            CustomNavigator.pushTo(
+              context,
+              AppRouter.otp,
+              arguments: _phoneTC.text,
+            );
+          } else {
+            Navigator.pop(context);
+            ScaffoldHelper.showBottomSheet(
+              context: context,
+              child: OtpWidget(
+                phoneNumber: _phoneTC.text,
+              ),
+              title: 'Verify OTP',
+            );
+          }
         }
         if (state is AuthErrorState) {
           ScaffoldHelper.showSnackBar(
@@ -76,38 +98,44 @@ class _LoginWidgetState extends State<LoginWidget> {
         }
       },
       builder: (context, state) {
-        return Container(
-          color: ColorPalette.white,
-          child: Column(
-            mainAxisSize: MainAxisSize.min,
-            children: [
-              CustomTextField(
-                maxLength: 10,
-                onChanged: (v) {
-                  _btnStreamChanged();
-                },
-                keyboardType: TextInputType.phone,
-                controller: _phoneTC,
-                title: 'Enter Your Phone Number',
-                hintText: 'Mobile Number',
-                prefix: Text(
-                  '+91',
-                  style: AppTextThemes.of(context)
-                      .bodyMedium
-                      ?.copyWith(color: ColorPalette.darktext),
+        return Form(
+          key: _formKey,
+          child: Container(
+            color: ColorPalette.white,
+            child: Column(
+              mainAxisSize: MainAxisSize.min,
+              children: [
+                CustomTextField(
+                  validator: AuthValidators.validatePhoneNumber,
+                  maxLength: 10,
+                  onChanged: (v) {
+                    _btnStreamChanged();
+                  },
+                  keyboardType: TextInputType.phone,
+                  controller: _phoneTC,
+                  title: 'Enter Your Phone Number',
+                  hintText: 'Mobile Number',
+                  prefix: Text(
+                    '+91',
+                    style: AppTextThemes.of(context)
+                        .bodyMedium
+                        ?.copyWith(color: ColorPalette.darktext),
+                  ),
                 ),
-              ),
-              if (!widget.loginWidgetType!.isPageWidget) CustomSpacers.height16,
-              if (widget.loginWidgetType!.isPageWidget) CustomSpacers.height120,
-              TermsAndConditionWidget(
-                onChanged: (v) {
-                  isConditionChecked = v;
-                  _btnStreamChanged();
-                },
-              ),
-              CustomSpacers.height16,
-              _buildButton(state),
-            ],
+                if (!widget.loginWidgetType!.isPageWidget)
+                  CustomSpacers.height16,
+                if (widget.loginWidgetType!.isPageWidget)
+                  CustomSpacers.height120,
+                TermsAndConditionWidget(
+                  onChanged: (v) {
+                    isConditionChecked = v;
+                    _btnStreamChanged();
+                  },
+                ),
+                CustomSpacers.height16,
+                _buildButton(state),
+              ],
+            ),
           ),
         );
       },
@@ -122,12 +150,16 @@ class _LoginWidgetState extends State<LoginWidget> {
           return CustomButton.icon(
             isDisabled: snapshot.data != true,
             isLoading: state is AuthLoadingState,
-            buttonAction: () => _bloc.generateOtp(
-              GenerateOtpEntity(
-                mobileNumber: _phoneTC.text,
-                countryCode: '91',
-              ),
-            ),
+            buttonAction: () {
+              if (_formKey.currentState!.validate()) {
+                _bloc.generateOtp(
+                  GenerateOtpEntity(
+                    mobileNumber: _phoneTC.text,
+                    countryCode: '91',
+                  ),
+                );
+              }
+            },
             strButtonText: 'Next',
             icon: const Icon(
               Icons.arrow_forward,

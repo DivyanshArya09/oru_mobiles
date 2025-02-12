@@ -7,7 +7,8 @@ import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class OtpScreen extends StatelessWidget {
-  const OtpScreen({super.key});
+  final String phoneNumber;
+  const OtpScreen({super.key, required this.phoneNumber});
 
   @override
   Widget build(BuildContext context) {
@@ -33,10 +34,14 @@ class OtpScreen extends StatelessWidget {
             CustomSpacers.height60,
             AuthHeaderWidget(
               title: 'Verify Mobile No.',
-              subTitleWidget: VerificationTextWidget(),
+              subTitleWidget: VerificationTextWidget(
+                phoneNumber: phoneNumber,
+              ),
             ),
             CustomSpacers.height100,
-            const OtpWidget(),
+            OtpWidget(
+              phoneNumber: phoneNumber,
+            ),
           ],
         ),
       ),

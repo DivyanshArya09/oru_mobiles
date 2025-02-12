@@ -5,6 +5,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/figma_constants.dart';
 import 'package:oru_mobiles/core/managers/app_manager.dart';
 import 'package:oru_mobiles/features/auth/presentation/screens/sign_in_screen.dart';
+import 'package:oru_mobiles/routes/custom_navigator.dart';
 import 'package:oru_mobiles/themes/app_themes.dart';
 
 Future<void> main() async {
@@ -22,6 +23,9 @@ class MyApp extends StatelessWidget {
       designSize: const Size(VALUE_FIGMA_WIDTH, VALUE_FIGMA_HEIGHT),
       builder: (context, child) => MaterialApp(
         debugShowCheckedModeBanner: false,
+        navigatorKey: kNavigatorKey,
+        onGenerateRoute: CustomNavigator.controller,
+        // initialRoute: AppRouter.splashScreen,
         title: 'Oru Mobiles',
         theme: AppThemes.lightTheme,
         home: const SignInScreen(),

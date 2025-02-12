@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:oru_mobiles/features/auth/presentation/widgets/auth_header_widget.dart';
+import 'package:oru_mobiles/features/auth/presentation/widgets/sign_up_widget.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 
@@ -33,6 +34,8 @@ class SignUpScreen extends StatelessWidget {
                 title: 'Welcome',
                 subtitle: 'Sign up to continue',
               ),
+              CustomSpacers.height60,
+              const SignUpWidget(),
             ],
           ),
         ),
