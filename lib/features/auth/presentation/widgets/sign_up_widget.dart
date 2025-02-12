@@ -1,4 +1,8 @@
 import 'package:flutter/material.dart';
+import 'package:oru_mobiles/core/helpers/user_helper.dart';
+import 'package:oru_mobiles/features/auth/presentation/utils/auth_validators.dart';
+import 'package:oru_mobiles/routes/app_routes.dart';
+import 'package:oru_mobiles/routes/custom_navigator.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
 import 'package:oru_mobiles/ui/custom_text_field.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
@@ -22,7 +26,7 @@ class SignUpWidget extends StatefulWidget {
 
 class _SignUpWidgetState extends State<SignUpWidget> {
   late TextEditingController _nameTC;
-
+  var _formKey = GlobalKey<FormState>();
   @override
   void initState() {
     _nameTC = TextEditingController();
@@ -37,24 +41,40 @@ class _SignUpWidgetState extends State<SignUpWidget> {
 
   @override
   Widget build(BuildContext context) {
-    return Column(
-      mainAxisSize: MainAxisSize.min,
-      children: [
-        if (widget.signUpWidgetType!.isPageWidget) CustomSpacers.height100,
-        if (!widget.signUpWidgetType!.isPageWidget) CustomSpacers.height10,
-        CustomTextField(
-          controller: _nameTC,
-          title: 'Please Tell Us Your Name *',
-          hintText: 'Name',
-        ),
-        if (widget.signUpWidgetType!.isPageWidget) CustomSpacers.height100,
-        if (!widget.signUpWidgetType!.isPageWidget) CustomSpacers.height32,
-        CustomButton.icon(
-          strButtonText: 'Confirm Name',
-          buttonAction: () {},
-          icon: const Icon(Icons.arrow_forward, color: Colors.white),
-        ),
-      ],
+    return Form(
+      key: _formKey,
+      child: Column(
+        mainAxisSize: MainAxisSize.min,
+        children: [
+          if (widget.signUpWidgetType!.isPageWidget) CustomSpacers.height100,
+          if (!widget.signUpWidgetType!.isPageWidget) CustomSpacers.height10,
+          CustomTextField(
+            validator: AuthValidators.validateName,
+            controller: _nameTC,
+            title: 'Please Tell Us Your Name *',
+            hintText: 'Name',
+          ),
+          if (widget.signUpWidgetType!.isPageWidget) CustomSpacers.height100,
+          if (!widget.signUpWidgetType!.isPageWidget) CustomSpacers.height32,
+          CustomButton.icon(
+            strButtonText: 'Confirm Name',
+            buttonAction: () {
+              if (_formKey.currentState!.validate()) {
+                UserHelper.setUserName(_nameTC.text);
+                if (widget.signUpWidgetType!.isPageWidget) {
+                  CustomNavigator.pushAndRemoveUntil(
+                    context,
+                    AppRouter.home,
+                  );
+                } else {
+                  Navigator.pop(context);
+                }
+              }
+            },
+            icon: const Icon(Icons.arrow_forward, color: Colors.white),
+          ),
+        ],
+      ),
     );
   }
 }
