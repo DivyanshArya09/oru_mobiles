@@ -11,7 +11,7 @@ class UserHelper {
   }
 
   static setIsloggedIn(bool isLoggedIn) {
-    SharedPreferencesManager.setBool(joinedDate, isLoggedIn);
+    SharedPreferencesManager.setBool(isUserLoggedIN, isLoggedIn);
   }
 
   static String getUserName() {

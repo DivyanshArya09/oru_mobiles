@@ -4,7 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/figma_constants.dart';
 import 'package:oru_mobiles/core/managers/app_manager.dart';
-import 'package:oru_mobiles/features/auth/presentation/screens/sign_up_screen.dart';
+import 'package:oru_mobiles/features/onboarding/presentation/splash_screen.dart';
 import 'package:oru_mobiles/routes/custom_navigator.dart';
 import 'package:oru_mobiles/themes/app_themes.dart';
 
@@ -28,7 +28,7 @@ class MyApp extends StatelessWidget {
         // initialRoute: AppRouter.splashScreen,
         title: 'Oru Mobiles',
         theme: AppThemes.lightTheme,
-        home: const SignUpScreen(),
+        home: const SplashScreen(),
       ),
     );
   }

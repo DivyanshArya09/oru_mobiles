@@ -1,7 +1,13 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:flutter_svg/flutter_svg.dart';
+import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
+import 'package:oru_mobiles/core/helpers/user_helper.dart';
 import 'package:oru_mobiles/features/home/presentation/utils/side_bar_enums.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/profile_widget.dart';
+import 'package:oru_mobiles/routes/app_routes.dart';
+import 'package:oru_mobiles/routes/custom_navigator.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
@@ -25,25 +31,34 @@ class _CustomSideBarState extends State<CustomSideBar> {
           children: [
             Container(
               margin: EdgeInsets.only(top: 42.h),
-              padding: EdgeInsets.symmetric(horizontal: 16.w),
+              padding: EdgeInsets.all(12.w),
               color: ColorPalette.lightGrey.withOpacity(.23),
               width: double.infinity,
-              height: 60.h,
+              // height: 60.h,
               alignment: Alignment.center,
-              child: Row(
+              child: Column(
+                mainAxisSize: MainAxisSize.min,
                 children: [
-                  const AppLogo(
-                    width: 50,
-                    height: 25,
+                  Row(
+                    children: [
+                      const AppLogo(
+                        width: 50,
+                        height: 25,
+                      ),
+                      const Spacer(),
+                      IconButton(
+                        icon: const Icon(
+                          Icons.close,
+                          color: ColorPalette.darktext,
+                        ),
+                        onPressed: () => Navigator.pop(context),
+                      ),
+                    ],
                   ),
-                  const Spacer(),
-                  IconButton(
-                    icon: const Icon(
-                      Icons.close,
-                      color: ColorPalette.darktext,
-                    ),
-                    onPressed: () => Navigator.pop(context),
-                  ),
+                  if (UserHelper.getIsloggedIn() == true) ...[
+                    CustomSpacers.height24,
+                    const ProfileWidget(),
+                  ]
                 ],
               ),
             ),
@@ -53,12 +68,17 @@ class _CustomSideBarState extends State<CustomSideBar> {
                 mainAxisSize: MainAxisSize.min,
                 mainAxisAlignment: MainAxisAlignment.center,
                 children: [
-                  CustomSpacers.height24,
-                  CustomButton(
-                    strButtonText: 'Login/SignUp',
-                    buttonAction: () {},
-                    buttonType: ButtonType.secondary,
-                  ),
+                  if (UserHelper.getIsloggedIn() == false) ...[
+                    CustomSpacers.height24,
+                    CustomButton(
+                      strButtonText: 'Login/SignUp',
+                      buttonAction: () => CustomNavigator.pushAndRemoveUntil(
+                        context,
+                        AppRouter.login,
+                      ),
+                      buttonType: ButtonType.secondary,
+                    ),
+                  ],
                   CustomSpacers.height10,
                   CustomButton(
                     strButtonText: 'Sell Your Phone',
@@ -73,6 +93,20 @@ class _CustomSideBarState extends State<CustomSideBar> {
                     ),
                     buttonType: ButtonType.secondary,
                   ),
+                  CustomSpacers.height70,
+                  Row(
+                    children: [
+                      CustomSpacers.width8,
+                      SvgPicture.asset(
+                        AppAssets.logoutIcon,
+                      ),
+                      CustomSpacers.width8,
+                      Text(
+                        'Logout',
+                        style: AppTextThemes.of(context).bodyLarge,
+                      ),
+                    ],
+                  )
                 ],
               ),
             ),
@@ -103,7 +137,6 @@ class _CustomSideBarState extends State<CustomSideBar> {
         itemCount: SideBarEnums.values.length,
         itemBuilder: (context, index) {
           final item = SideBarEnums.values[index];
-
           return Container(
             decoration: BoxDecoration(
               borderRadius: BorderRadius.circular(8),
