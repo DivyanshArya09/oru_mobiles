@@ -17,11 +17,12 @@ class AppAssets {
   //! Home assets
   static String homeBanner = 'assets/images/Phone Banners.png';
   static String bagIcon = 'assets/icons/bag.svg';
-  static String shopCircle = 'assets/icons/file 1.svg';
+  static String shopCircle = 'assets/icons/shop1.png';
   static String tagIcon = 'assets/icons/tag.svg';
   static String banner1 = 'assets/images/Banner 1.png';
   static String banner2 = 'assets/images/Banner 2.png';
   static String banner3 = 'assets/images/Banner 3.png';
   static String banner4 = 'assets/images/Banner 4.png';
   static String banner5 = 'assets/images/Banner 5.png';
+  static String oruStores = 'assets/icons/orustores 1.svg';
 }

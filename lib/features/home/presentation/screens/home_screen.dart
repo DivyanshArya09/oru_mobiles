@@ -62,7 +62,6 @@ class _HomeScreenState extends State<HomeScreen> {
                 PersistentHeader(
                   searchController: _searchTC,
                 ),
-                _buildAdaptorBox(CustomSpacers.height20),
                 _buildAdaptorBox(const CustomCarouselSlider()),
                 _buildAdaptorBox(CustomSpacers.height20),
                 _buildAdaptorBox(const WhatsOnYourMindWidget()),
@@ -93,6 +92,7 @@ class _HomeScreenState extends State<HomeScreen> {
                   _buildAdaptorBox(CustomSpacers.height20),
                   _buildAdaptorBox(TopBrandsWidget(brands: _bloc.mobileBrands)),
                 ],
+                SliverToBoxAdapter(child: CustomSpacers.height120),
               ],
             );
           },
@@ -126,6 +126,7 @@ class _HomeScreenState extends State<HomeScreen> {
           title: Row(
             children: [
               GestureDetector(
+                onTap: () => ScaffoldHelper.toggleDrawer(),
                 child: SvgPicture.asset(AppAssets.hamBurgerIcon),
               ),
               CustomSpacers.width10,

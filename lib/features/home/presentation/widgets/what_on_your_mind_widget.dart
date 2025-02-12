@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
+import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
@@ -53,6 +54,11 @@ class WhatsOnYourMindWidget extends StatelessWidget {
             decoration: const BoxDecoration(
               shape: BoxShape.circle,
               color: ColorPalette.lightestGrey,
+            ),
+            child: Image.asset(
+              height: 72.h,
+              AppAssets.shopCircle,
+              fit: BoxFit.cover,
             ),
           ),
           CustomSpacers.height8,

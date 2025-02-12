@@ -39,15 +39,18 @@ class _PersistentCategoryState<T extends Object>
           child: Container(
             padding: const EdgeInsets.symmetric(horizontal: 16, vertical: 5),
             decoration: BoxDecoration(
-              color: Colors.white.withOpacity(0.2),
+              color: Colors.white.withOpacity(0.4),
               borderRadius: BorderRadius.circular(12),
-              border: Border.all(
-                  color: Colors.white.withOpacity(0.3)), // Light border
+              border: Border.all(color: Colors.white.withOpacity(0.3)),
             ),
             child: Column(
-              // mainAxisSize: MainAxisSize.min,
               children: [
                 CustomTextField(
+                  hintTextColor: ColorPalette.darkGrey,
+                  contentPadding: const EdgeInsets.symmetric(
+                    horizontal: 10,
+                    vertical: 4,
+                  ),
                   raduis: 12,
                   borderColor: ColorPalette.borderColorLight,
                   controller: widget.searchController,

@@ -15,13 +15,15 @@ class CustomTextField extends StatelessWidget {
   final int? maxLength;
   final String? Function(String?)? validator;
   final Function(String?)? onChanged;
+  final Color? hintTextColor;
   const CustomTextField({
     super.key,
+    this.hintTextColor = ColorPalette.borderColor,
     required this.controller,
     this.borderColor = ColorPalette.borderColor,
     this.title,
     this.contentPadding =
-        const EdgeInsets.symmetric(horizontal: 16, vertical: 15),
+        const EdgeInsets.symmetric(horizontal: 12, vertical: 11),
     this.prefix,
     this.suffix,
     this.raduis = 4,
@@ -53,6 +55,7 @@ class CustomTextField extends StatelessWidget {
           style: inputTextStyle,
           keyboardType: keyboardType,
           decoration: InputDecoration(
+            helperStyle: TextStyle(color: hintTextColor),
             fillColor: ColorPalette.white,
             filled: true,
             counterText: '',
@@ -61,12 +64,7 @@ class CustomTextField extends StatelessWidget {
             errorBorder: _getborder(raduis!),
             contentPadding: contentPadding,
             hintText: hintText,
-            prefixIcon: prefix == null
-                ? null
-                : Padding(
-                    padding: contentPadding!,
-                    child: prefix,
-                  ),
+            prefixIcon: prefix,
             suffixIcon: suffix != null
                 ? Padding(
                     padding: contentPadding!,
