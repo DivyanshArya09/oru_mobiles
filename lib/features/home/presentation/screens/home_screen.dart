@@ -29,12 +29,33 @@ class _HomeScreenState extends State<HomeScreen> {
         padding: const EdgeInsets.all(16.0),
         child: Column(
           children: [
-            CustomSpacers.height120,
-            Center(
-              child: CustomTextField(
-                controller: TextEditingController(),
-                title: 'Hello world',
-                hintText: 'Hello world',
+            CustomTextField(
+              raduis: 12,
+              controller: TextEditingController(),
+              hintText: 'Search phones with make, model...',
+              prefix: const Icon(
+                color: ColorPalette.lightGrey,
+                Icons.search,
+              ),
+              suffix: const SizedBox(
+                width: 30,
+                child: Row(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
+                  children: [
+                    Text(
+                      "|",
+                      style: TextStyle(
+                        fontWeight: FontWeight.bold,
+                        color: ColorPalette.darkGrey,
+                      ),
+                    ),
+                    Icon(
+                      Icons.mic_none_outlined,
+                      color: ColorPalette.darkGrey,
+                    ),
+                  ],
+                ),
               ),
             ),
           ],
