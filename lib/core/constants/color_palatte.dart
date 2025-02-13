@@ -12,4 +12,5 @@ class ColorPalette {
   static const action = Color.fromRGBO(246, 192, 24, 1);
   static const darkGrey = Color.fromRGBO(112, 112, 112, 1);
   static const darkestGrey = Color.fromRGBO(82, 82, 82, 1);
+  static const grey = Color.fromRGBO(232, 232, 232, 1);
 }

@@ -20,3 +20,10 @@ final class HomeLoadedState extends HomeState {
   final List<MobileBrandModel> mobileBrands;
   const HomeLoadedState({required this.mobileBrands});
 }
+
+class GetFaqLoadingState extends HomeState {}
+
+class GetFaqSuccessState extends HomeState {
+  final List<FaqModel> faqs;
+  const GetFaqSuccessState({required this.faqs});
+}

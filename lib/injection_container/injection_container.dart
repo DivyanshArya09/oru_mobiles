@@ -8,6 +8,7 @@ import 'package:oru_mobiles/features/auth/domain/usecases/validate_otp_use_case.
 import 'package:oru_mobiles/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:oru_mobiles/features/home/data/data_sources/home_remote_data_sources.dart';
 import 'package:oru_mobiles/features/home/data/repository/home_repositiry.dart';
+import 'package:oru_mobiles/features/home/domain/usecases/get_faqs_use_case.dart';
 import 'package:oru_mobiles/features/home/domain/usecases/get_mobile_brands_use_case.dart';
 import 'package:oru_mobiles/features/home/presentation/bloc/home_bloc.dart';
 
@@ -62,9 +63,15 @@ void home() {
       homeRepository: sl(),
     ),
   );
+  sl.registerLazySingleton(
+    () => GetFaqsUseCase(
+      homeRepository: sl(),
+    ),
+  );
 
   sl.registerFactory(
     () => HomeBloc(
+      getFaqsUseCase: sl(),
       getMobileBrandsUseCase: sl(),
     ),
   );

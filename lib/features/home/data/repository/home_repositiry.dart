@@ -3,6 +3,7 @@ import 'package:oru_mobiles/core/errors/exceptions.dart';
 import 'package:oru_mobiles/core/errors/failures.dart';
 import 'package:oru_mobiles/core/network/network_info.dart';
 import 'package:oru_mobiles/features/home/data/data_sources/home_remote_data_sources.dart';
+import 'package:oru_mobiles/features/home/data/models/faq_model.dart';
 import 'package:oru_mobiles/features/home/data/models/mobile_brand_model.dart';
 
 class HomeRepository {
@@ -19,6 +20,22 @@ class HomeRepository {
     if (await _networkInfo.isConnected) {
       try {
         final response = await _dataSources.getBrands();
+        return Right(response);
+      } catch (e) {
+        if (e is ApiException) {
+          return Left(ServerFailure(message: e.message));
+        }
+        return Left(ServerFailure(message: e.toString()));
+      }
+    } else {
+      return const Left(InternetFailure());
+    }
+  }
+
+  Future<Either<Failure, List<FaqModel>>> getFaqs() async {
+    if (await _networkInfo.isConnected) {
+      try {
+        final response = await _dataSources.getFaqs();
         return Right(response);
       } catch (e) {
         if (e is ApiException) {

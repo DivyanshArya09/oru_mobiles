@@ -9,6 +9,7 @@ import 'package:oru_mobiles/features/home/presentation/bloc/home_bloc.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/best_deals_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/carousel_slider.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/custom_side_bar.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/faq_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/persistent_header.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/product_grid.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/top_brands_widget.dart';
@@ -37,8 +38,12 @@ class _HomeScreenState extends State<HomeScreen> {
   void initState() {
     _searchTC = TextEditingController();
     _bloc = sl<HomeBloc>();
-    WidgetsBinding.instance
-        .addPostFrameCallback((timeStamp) => _bloc.getMobileBrands());
+    WidgetsBinding.instance.addPostFrameCallback(
+      (timeStamp) {
+        _bloc.getMobileBrands();
+        _bloc.getFaqs();
+      },
+    );
     super.initState();
   }
 
@@ -128,6 +133,19 @@ class _HomeScreenState extends State<HomeScreen> {
                   const BestDealsWidget(),
                 ),
                 const SliverToBoxAdapter(child: ProductGrid()),
+                _buildAdaptorBox(CustomSpacers.height20),
+                if (state is GetFaqLoadingState) ...[
+                  _buildAdaptorBox(const FaqSkelTon()),
+                ],
+                if (_bloc.faqs.isNotEmpty) ...[
+                  _buildAdaptorBox(CustomSpacers.height20),
+                  _buildAdaptorBox(
+                    FAQWidget(
+                      faqs: _bloc.faqs,
+                    ),
+                  ),
+                ],
+                _buildAdaptorBox(CustomSpacers.height120),
               ],
             );
           },
