@@ -122,7 +122,9 @@ class CustomButton extends StatelessWidget {
                         ? textStyle?.copyWith(
                             color: textColor,
                           )
-                        : textStyle,
+                        : textStyle?.copyWith(
+                            color: textColor,
+                          ),
                   ),
             if (icon != null)
               Container(

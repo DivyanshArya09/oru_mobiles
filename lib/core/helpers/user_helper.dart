@@ -1,5 +1,7 @@
 import 'package:oru_mobiles/core/constants/shared_prefs_key.dart';
 import 'package:oru_mobiles/core/managers/shared_preferences_manger.dart';
+import 'package:oru_mobiles/routes/app_routes.dart';
+import 'package:oru_mobiles/routes/custom_navigator.dart';
 
 class UserHelper {
   static setUserName(String name) {
@@ -24,5 +26,14 @@ class UserHelper {
 
   static bool getIsloggedIn() {
     return SharedPreferencesManager.getBool(isUserLoggedIN);
+  }
+
+  static void logOut() {
+    SharedPreferencesManager.removeKey(isUserLoggedIN);
+    SharedPreferencesManager.removeKey(userName);
+    SharedPreferencesManager.removeKey(joinedDate);
+
+    kNavigatorKey.currentState!
+        .pushNamedAndRemoveUntil(AppRouter.splashScreen, (route) => false);
   }
 }

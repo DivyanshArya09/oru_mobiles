@@ -96,18 +96,21 @@ class _CustomSideBarState extends State<CustomSideBar> {
                     buttonType: ButtonType.secondary,
                   ),
                   CustomSpacers.height70,
-                  Row(
-                    children: [
-                      CustomSpacers.width8,
-                      SvgPicture.asset(
-                        AppAssets.logoutIcon,
-                      ),
-                      CustomSpacers.width8,
-                      Text(
-                        'Logout',
-                        style: AppTextThemes.of(context).bodyLarge,
-                      ),
-                    ],
+                  InkWell(
+                    onTap: () => showLogoutDialog(context),
+                    child: Row(
+                      children: [
+                        CustomSpacers.width8,
+                        SvgPicture.asset(
+                          AppAssets.logoutIcon,
+                        ),
+                        CustomSpacers.width8,
+                        Text(
+                          'Logout',
+                          style: AppTextThemes.of(context).bodyLarge,
+                        ),
+                      ],
+                    ),
                   )
                 ],
               ),
@@ -167,6 +170,88 @@ class _CustomSideBarState extends State<CustomSideBar> {
           );
         },
       ),
+    );
+  }
+
+  void showLogoutDialog(BuildContext context) {
+    showDialog(
+      context: context,
+      builder: (BuildContext context) {
+        return AlertDialog(
+          backgroundColor: ColorPalette.white,
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(12), // Rounded corners
+          ),
+          titlePadding: const EdgeInsets.all(16),
+          contentPadding: const EdgeInsets.symmetric(horizontal: 24),
+          actionsPadding:
+              const EdgeInsets.only(bottom: 16, right: 16, left: 16),
+          title: Column(
+            mainAxisSize: MainAxisSize.min, // Reduce height
+            children: [
+              Align(
+                alignment: Alignment.topRight,
+                child: GestureDetector(
+                  onTap: () => Navigator.pop(context),
+                  child: const Icon(
+                    Icons.close,
+                    color: ColorPalette.darktext,
+                  ),
+                ),
+              ),
+              SvgPicture.asset(
+                AppAssets.logoutIcon,
+              ),
+              CustomSpacers.height12,
+              const Text(
+                'Logout',
+                style: TextStyle(fontWeight: FontWeight.bold, fontSize: 18),
+              ),
+            ],
+          ),
+          content: Text(
+            'Are you sure you want to logout?\n\nYou will need to re-login to view your listings, favourites, negotiations, and purchases.',
+            textAlign: TextAlign.center,
+            style: AppTextThemes.of(context).labelMedium,
+          ),
+          actions: [
+            CustomSpacers.height30,
+            Row(
+              mainAxisAlignment: MainAxisAlignment.spaceBetween,
+              children: [
+                Expanded(
+                  child: SizedBox(
+                    height: 40, // Minimize button height
+                    child: CustomButton(
+                      dCornerRadius: 100,
+                      bgColor: Colors.transparent,
+                      borderColor: ColorPalette.darktext,
+                      textColor: ColorPalette.darktext,
+                      strButtonText: 'No',
+                      buttonAction: () => Navigator.pop(context),
+                      buttonType: ButtonType.primary,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 12), // Spacing between buttons
+                Expanded(
+                  child: SizedBox(
+                    height: 40, // Minimize button height
+                    child: CustomButton(
+                      textColor: ColorPalette.darktext,
+                      strButtonText: 'Logout',
+                      buttonAction: () => UserHelper.logOut(),
+                      buttonType: ButtonType.secondary,
+                      bgColor: ColorPalette.action,
+                      borderColor: ColorPalette.action,
+                    ),
+                  ),
+                ),
+              ],
+            ),
+          ],
+        );
+      },
     );
   }
 }

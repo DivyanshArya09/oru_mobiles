@@ -64,7 +64,12 @@ class CustomTextField extends StatelessWidget {
             errorBorder: _getborder(raduis!),
             contentPadding: contentPadding,
             hintText: hintText,
-            prefixIcon: prefix,
+            prefixIcon: prefix != null
+                ? Padding(
+                    padding: contentPadding!,
+                    child: prefix,
+                  )
+                : null,
             suffixIcon: suffix != null
                 ? Padding(
                     padding: contentPadding!,
