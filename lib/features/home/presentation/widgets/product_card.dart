@@ -4,12 +4,14 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/favourite_icon.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/ui/shimmer_container.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class ProductCard extends StatelessWidget {
-  const ProductCard({super.key});
+  final Function(bool? isFavourite) onFavouriteTap;
+  const ProductCard({super.key, required this.onFavouriteTap});
 
   @override
   Widget build(BuildContext context) {
@@ -68,7 +70,7 @@ class ProductCard extends StatelessWidget {
                   width: 70,
                   child: Text(
                     overflow: TextOverflow.ellipsis,
-                    'Nijampur, Luc.....',
+                    'Nijampur, Lucknow',
                     style: AppTextThemes.of(context).labelMedium,
                   ),
                 ),
@@ -185,13 +187,9 @@ class ProductCard extends StatelessWidget {
                     AppAssets.oruVerified,
                   ),
                   const Spacer(),
-                  const Padding(
-                    padding: EdgeInsets.only(bottom: 8, right: 8),
-                    child: Icon(
-                      Icons.favorite_border_outlined,
-                      color: Colors.white,
-                    ),
-                  ),
+                  FavouriteIcon(
+                    onChanged: onFavouriteTap,
+                  )
                 ],
               ),
             ),

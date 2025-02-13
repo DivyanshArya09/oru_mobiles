@@ -103,7 +103,9 @@ class _OtpWidgetState extends State<OtpWidget> {
             Navigator.pop(context);
             ScaffoldHelper.showBottomSheet(
               context: context,
-              child: const SignUpWidget(),
+              child: const SignUpWidget(
+                signUpWidgetType: SignUpWidgetType.bottomSheet,
+              ),
               title: 'Sign Up to continue',
             );
           }
@@ -121,13 +123,13 @@ class _OtpWidgetState extends State<OtpWidget> {
         return Column(
           mainAxisSize: MainAxisSize.min,
           children: [
-            if (!widget.otpWidgetType!.isPageWidget) ...[
-              CustomSpacers.height10,
-              VerificationTextWidget(
-                phoneNumber: widget.phoneNumber,
-              ),
-              CustomSpacers.height10
-            ],
+            // if (!widget.otpWidgetType!.isPageWidget) ...[
+            VerificationTextWidget(
+              phoneNumber: widget.phoneNumber,
+            ),
+            CustomSpacers.height20
+            // ],,
+            ,
             _buildOtpField(),
             CustomSpacers.height20,
             Text(

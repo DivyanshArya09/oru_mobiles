@@ -19,7 +19,9 @@ class ProductGrid extends StatelessWidget {
         childAspectRatio: 160 / 292,
       ),
       itemCount: itemCount,
-      itemBuilder: (context, index) => const ProductCard(),
+      itemBuilder: (context, index) => ProductCard(
+        onFavouriteTap: (v) {},
+      ),
     );
   }
 }

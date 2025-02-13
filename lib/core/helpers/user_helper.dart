@@ -28,6 +28,10 @@ class UserHelper {
     return SharedPreferencesManager.getBool(isUserLoggedIN);
   }
 
+  static bool getIsCurrentProductLiked() {
+    return SharedPreferencesManager.getBool(isCurrentProductLiked);
+  }
+
   static void logOut() {
     SharedPreferencesManager.removeKey(isUserLoggedIN);
     SharedPreferencesManager.removeKey(userName);

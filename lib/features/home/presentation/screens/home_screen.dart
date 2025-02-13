@@ -15,6 +15,8 @@ import 'package:oru_mobiles/features/home/presentation/widgets/product_grid.dart
 import 'package:oru_mobiles/features/home/presentation/widgets/top_brands_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/what_on_your_mind_widget.dart';
 import 'package:oru_mobiles/injection_container/injection_container.dart';
+import 'package:oru_mobiles/routes/app_routes.dart';
+import 'package:oru_mobiles/routes/custom_navigator.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
@@ -40,8 +42,7 @@ class _HomeScreenState extends State<HomeScreen> {
     _bloc = sl<HomeBloc>();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
-        _bloc.getMobileBrands();
-        _bloc.getFaqs();
+        _bloc.getMobileBrands().then((value) => _bloc.getFaqs());
       },
     );
     super.initState();
@@ -199,7 +200,10 @@ class _HomeScreenState extends State<HomeScreen> {
               if (UserHelper.getIsloggedIn() == false) ...[
                 CustomButton(
                   strButtonText: 'Login',
-                  buttonAction: () {},
+                  buttonAction: () => CustomNavigator.pushAndRemoveUntil(
+                    context,
+                    AppRouter.login,
+                  ),
                   bgColor: ColorPalette.action,
                   borderColor: ColorPalette.action,
                   dHeight: 30,

@@ -24,11 +24,12 @@ class ScaffoldHelper {
     scaffoldKey.currentState!.openDrawer();
   }
 
-  static Future<void> showBottomSheet(
+  static Future<bool?> showBottomSheet(
           {required BuildContext context,
           required Widget child,
           required String title}) =>
       showModalBottomSheet(
+        isDismissible: false,
         isScrollControlled: true,
         // constraints: BoxConstraints(
         //   maxHeight: MediaQuery.of(context).size.height * 0.5,
@@ -79,7 +80,7 @@ class ScaffoldHelper {
                         Icons.close,
                         color: ColorPalette.darktext,
                       ),
-                      onTap: () => Navigator.pop(context),
+                      onTap: () => Navigator.pop(context, false),
                     ),
                   ],
                 ),

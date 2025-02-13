@@ -84,6 +84,7 @@ class _LoginWidgetState extends State<LoginWidget> {
               context: context,
               child: OtpWidget(
                 phoneNumber: _phoneTC.text,
+                otpWidgetType: OtpWidgetType.bottomSheet,
               ),
               title: 'Verify OTP',
             );
