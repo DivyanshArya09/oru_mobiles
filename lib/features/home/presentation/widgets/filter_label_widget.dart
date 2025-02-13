@@ -22,7 +22,7 @@ class FilterLabelWidget extends StatelessWidget {
         height: 50.h,
         decoration: BoxDecoration(
           // if selected then show this
-          color: filter.isSelected!
+          color: filter.isSelected
               ? ColorPalette.action.withOpacity(
                   .3,
                 )

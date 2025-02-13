@@ -99,7 +99,7 @@ class CustomButton extends StatelessWidget {
       height: dHeight,
       width: dWidth,
       decoration: BoxDecoration(
-        color: isDisabled ? bgColor.withOpacity(.3) : bgColor,
+        color: isDisabled ? ColorPalette.lightGrey : bgColor,
         borderRadius: BorderRadius.circular(dCornerRadius),
         border: isDisabled ? null : Border.all(color: borderColor, width: 1),
         // boxShadow: _getShadow(bgColor),
@@ -120,7 +120,7 @@ class CustomButton extends StatelessWidget {
                     textAlign: buttonTextAlignment,
                     style: isDisabled
                         ? textStyle?.copyWith(
-                            color: textColor,
+                            color: ColorPalette.darkestGrey,
                           )
                         : textStyle?.copyWith(
                             color: textColor,
@@ -144,10 +144,11 @@ class CustomButton extends StatelessWidget {
       height: dHeight,
       width: dWidth,
       decoration: BoxDecoration(
-        color: isDisabled ? bgColor.withOpacity(.3) : bgColor,
+        color: isDisabled ? ColorPalette.lightGrey : bgColor,
         borderRadius: BorderRadius.circular(100.r),
-        border: Border.all(color: borderColor, width: 1),
-        boxShadow: _getShadow(bgColor),
+        border: Border.all(
+            color: isDisabled ? ColorPalette.lightGrey : borderColor, width: 1),
+        boxShadow: isDisabled ? [] : _getShadow(bgColor),
       ),
       child: Padding(
         padding: const EdgeInsets.symmetric(horizontal: 16.0, vertical: 2.0),
@@ -163,7 +164,9 @@ class CustomButton extends StatelessWidget {
                 : Text(
                     strButtonText,
                     textAlign: buttonTextAlignment,
-                    style: textStyle?.copyWith(color: textColor),
+                    style: isDisabled
+                        ? textStyle?.copyWith(color: ColorPalette.darkestGrey)
+                        : textStyle?.copyWith(color: textColor),
                   ),
             if (icon != null)
               Container(

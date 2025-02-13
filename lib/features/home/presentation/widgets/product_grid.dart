@@ -28,6 +28,16 @@ class ProductGrid extends StatelessWidget {
   }
 
   Widget _buildProductGrid(List<ProductModel> products) {
+    if (products.isEmpty) {
+      return const Padding(
+        padding: const EdgeInsets.symmetric(
+          vertical: 16,
+        ),
+        child: Center(
+          child: Text('No products found for the selected filters'),
+        ),
+      );
+    }
     return GridView.builder(
       padding: const EdgeInsets.all(12),
       shrinkWrap: true,

@@ -14,8 +14,10 @@ import 'package:oru_mobiles/features/home/presentation/widgets/faq_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/filter_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/persistent_header.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/product_grid.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/sort_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/top_brands_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/what_on_your_mind_widget.dart';
+import 'package:oru_mobiles/features/home/utils/enums.dart';
 import 'package:oru_mobiles/injection_container/injection_container.dart';
 import 'package:oru_mobiles/routes/app_routes.dart';
 import 'package:oru_mobiles/routes/custom_navigator.dart';
@@ -140,6 +142,9 @@ class _HomeScreenState extends State<HomeScreen> {
                     onFilterTap: () {
                       _showFilterSheet(context);
                     },
+                    onSortTap: () {
+                      _showSortSheet(context);
+                    },
                   ),
                 ),
                 SliverToBoxAdapter(
@@ -252,6 +257,34 @@ class _HomeScreenState extends State<HomeScreen> {
       context: context,
       builder: (context) => FilterWidget(
         filterBloc: _filterBloc,
+      ),
+    );
+  }
+
+  void _showSortSheet(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height * 0.5,
+        maxHeight: MediaQuery.of(context).size.height * 0.5,
+      ),
+      context: context,
+      builder: (context) => SortWidget(
+        onApplyFilter: () {
+          _filterBloc.applyFilters();
+          Navigator.pop(context);
+        },
+        onClearFilter: () {
+          _filterBloc.resetSortingType();
+          Navigator.pop(context);
+        },
+        onFilterChanged: (filter) {
+          if (filter != null) {
+            _filterBloc.selectSortingType(filter);
+          }
+        },
+        selectedSortingType:
+            _filterBloc.selectedSortingType ?? SortingType.latest,
       ),
     );
   }

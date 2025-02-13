@@ -7,6 +7,7 @@ import 'package:oru_mobiles/features/home/domain/entities/filter_entity.dart';
 import 'package:oru_mobiles/features/home/domain/entities/get_products_filter_entity.dart';
 import 'package:oru_mobiles/features/home/domain/usecases/get_filters_use_case.dart';
 import 'package:oru_mobiles/features/home/domain/usecases/get_products_use_case.dart';
+import 'package:oru_mobiles/features/home/utils/enums.dart';
 
 part 'filter_state.dart';
 
@@ -27,6 +28,8 @@ class FilterBloc extends Cubit<FilterState> {
 
   List<FilterEntity> filters = [];
 
+  SortingType? selectedSortingType;
+
   int parentIndex = 0;
 
   GetProductsFilterEntity _entity = GetProductsFilterEntity.toDefault();
@@ -34,8 +37,13 @@ class FilterBloc extends Cubit<FilterState> {
   Future<void> applyFilters() async {
     _entity = GetProductsFilterEntity(
       filters: filters,
+      sortingType: selectedSortingType,
     );
     getProducts();
+  }
+
+  Future<void> selectSortingType(SortingType type) async {
+    selectedSortingType = type;
   }
 
   Future<void> getProducts() async {
@@ -82,6 +90,14 @@ class FilterBloc extends Cubit<FilterState> {
       );
     }
     emit(Success());
+  }
+
+  void resetSortingType() {
+    selectedSortingType = null;
+
+    _entity = GetProductsFilterEntity(filters: filters);
+
+    getProducts();
   }
 
   void resetFilters({bool isReset = false}) {

@@ -3,11 +3,10 @@ import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/features/home/presentation/blocs/filter_bloc/filter_bloc.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/bottom_sheet_bottom_container.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/bottom_sheet_header.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/filter_check_list.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/filter_label_widget.dart';
-import 'package:oru_mobiles/themes/app_text_themes.dart';
-import 'package:oru_mobiles/ui/custom_button.dart';
-import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class FilterWidget extends StatefulWidget {
   final FilterBloc filterBloc;
@@ -43,7 +42,13 @@ class _FilterWidgetState extends State<FilterWidget> {
           ),
           child: Stack(
             children: [
-              _buildHeader(),
+              BottomSheetHeader(
+                title: 'Filters',
+                onClose: () {
+                  _filterBloc.resetFilters();
+                  Navigator.pop(context);
+                },
+              ),
               if (state is FilterLoaded || _filterBloc.filters.isNotEmpty) ...[
                 _buildLeftSide(),
                 _buildRightSide(),
@@ -52,7 +57,16 @@ class _FilterWidgetState extends State<FilterWidget> {
                 const Center(child: CircularProgressIndicator())
               ],
               if (state is FilterError) ...[Center(child: Text(state.message))],
-              _buildBottomContainer(),
+              BottomSheetBottomContiner(
+                onClearFilter: () {
+                  Navigator.pop(context);
+                  _filterBloc.resetFilters(isReset: true);
+                },
+                onApplyFilter: () {
+                  Navigator.pop(context);
+                  _filterBloc.applyFilters();
+                },
+              ),
             ],
           ),
         );
@@ -107,105 +121,6 @@ class _FilterWidgetState extends State<FilterWidget> {
               _filterBloc.childLabelChanged(_filterBloc.parentIndex, p0, p1);
             },
           ),
-        ),
-      ),
-    );
-  }
-
-  Widget _buildBottomContainer() {
-    return Align(
-      alignment: Alignment.bottomCenter,
-      child: Container(
-        height: 64.h,
-        alignment: Alignment.center,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          border: Border(
-            top: BorderSide(
-              color: ColorPalette.lightGrey,
-              width: 1,
-            ),
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          children: [
-            CustomSpacers.width32,
-            GestureDetector(
-              onTap: () {
-                Navigator.pop(context);
-                _filterBloc.resetFilters(isReset: true);
-              },
-              child: Text(
-                'Clear all',
-                style: AppTextThemes.of(context).bodyMedium?.copyWith(
-                      color: ColorPalette.action,
-                    ),
-              ),
-            ),
-            const Spacer(),
-            CustomButton(
-              dWidth: 140.w,
-              dHeight: 40,
-              strButtonText: 'Apply',
-              buttonAction: () {
-                Navigator.pop(context);
-                _filterBloc.applyFilters();
-              },
-              buttonType: ButtonType.primary,
-              borderColor: Colors.transparent,
-              bgColor: ColorPalette.action,
-              dCornerRadius: 8,
-              textColor: ColorPalette.darktext,
-              textStyle: AppTextThemes.of(context).bodyMedium?.copyWith(
-                    fontWeight: FontWeight.bold,
-                  ),
-            ),
-          ],
-        ),
-      ),
-    );
-  }
-
-  Widget _buildHeader() {
-    return Align(
-      alignment: Alignment.topLeft,
-      child: Container(
-        height: 64.h,
-        decoration: const BoxDecoration(
-          color: Colors.white,
-          borderRadius: BorderRadius.only(
-            topLeft: Radius.circular(8),
-            topRight: Radius.circular(8),
-          ),
-          border: Border(
-            bottom: BorderSide(
-              color: ColorPalette.lightGrey,
-              width: 1,
-            ),
-          ),
-        ),
-        padding: const EdgeInsets.symmetric(horizontal: 16),
-        child: Row(
-          children: [
-            Text(
-              'Filters',
-              style: AppTextThemes.of(context).titleLarge?.copyWith(
-                    color: ColorPalette.darkestGrey,
-                  ),
-            ),
-            const Spacer(),
-            InkWell(
-              onTap: () {
-                _filterBloc.resetFilters();
-                Navigator.pop(context);
-              },
-              child: const Icon(
-                Icons.close,
-                color: ColorPalette.darktext,
-              ),
-            )
-          ],
         ),
       ),
     );

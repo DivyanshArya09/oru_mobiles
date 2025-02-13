@@ -1,23 +1,26 @@
 import 'package:oru_mobiles/features/home/domain/entities/filter_entity.dart';
+import 'package:oru_mobiles/features/home/utils/enums.dart';
 
 class GetProductsFilterEntity {
   final List<FilterEntity> filters;
-
-  GetProductsFilterEntity({required this.filters});
+  final SortingType? sortingType;
+  GetProductsFilterEntity({required this.filters, this.sortingType});
 
   Map<String, dynamic> toJson() {
     Map<String, dynamic> filtersMap = {};
     for (var filter in filters) {
-      if (filter.isSelected) {
-        filtersMap[filter.label] = filter.options
-            .where((option) => option.isSelected!)
-            .map((option) => option.label)
-            .toList();
-      }
+      filtersMap[filter.label] = filter.options
+          .where((option) => option.isSelected!)
+          .map((option) => option.label)
+          .toList();
+    }
+
+    if (sortingType != null) {
+      filtersMap['sort'] = sortingType!.toJson;
     }
 
     return {
-      'filters': filtersMap,
+      'filter': filtersMap,
     };
   }
 

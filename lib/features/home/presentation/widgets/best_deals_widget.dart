@@ -6,8 +6,9 @@ import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class BestDealsWidget extends StatelessWidget {
-  final VoidCallback onFilterTap;
-  const BestDealsWidget({super.key, required this.onFilterTap});
+  final VoidCallback onFilterTap, onSortTap;
+  const BestDealsWidget(
+      {super.key, required this.onFilterTap, required this.onSortTap});
 
   @override
   Widget build(BuildContext context) {
@@ -44,6 +45,9 @@ class BestDealsWidget extends StatelessWidget {
                 onTap: () {
                   if (index == 1) {
                     onFilterTap();
+                  }
+                  if (index == 0) {
+                    onSortTap();
                   }
                 },
                 child: _buildChip(
