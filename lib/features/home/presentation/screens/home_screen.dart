@@ -5,11 +5,13 @@ import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
 import 'package:oru_mobiles/core/helpers/user_helper.dart';
-import 'package:oru_mobiles/features/home/presentation/bloc/home_bloc.dart';
+import 'package:oru_mobiles/features/home/presentation/blocs/filter_bloc/filter_bloc.dart';
+import 'package:oru_mobiles/features/home/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/best_deals_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/carousel_slider.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/custom_side_bar.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/faq_widget.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/filter_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/persistent_header.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/product_grid.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/top_brands_widget.dart';
@@ -35,14 +37,17 @@ class HomeScreen extends StatefulWidget {
 class _HomeScreenState extends State<HomeScreen> {
   late TextEditingController _searchTC;
   late HomeBloc _bloc;
+  late FilterBloc _filterBloc;
 
   @override
   void initState() {
     _searchTC = TextEditingController();
     _bloc = sl<HomeBloc>();
+    _filterBloc = sl<FilterBloc>();
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         _bloc.getMobileBrands().then((value) => _bloc.getFaqs());
+        _filterBloc.getFilters();
       },
     );
     super.initState();
@@ -131,7 +136,11 @@ class _HomeScreenState extends State<HomeScreen> {
                 ],
                 _buildAdaptorBox(CustomSpacers.height20),
                 _buildAdaptorBox(
-                  const BestDealsWidget(),
+                  BestDealsWidget(
+                    onFilterTap: () {
+                      _showFilterSheet(context);
+                    },
+                  ),
                 ),
                 const SliverToBoxAdapter(child: ProductGrid()),
                 _buildAdaptorBox(CustomSpacers.height20),
@@ -225,6 +234,20 @@ class _HomeScreenState extends State<HomeScreen> {
             ],
           ),
         ),
+      ),
+    );
+  }
+
+  void _showFilterSheet(BuildContext context) {
+    showModalBottomSheet(
+      isScrollControlled: true,
+      constraints: BoxConstraints(
+        minHeight: MediaQuery.of(context).size.height * 0.8,
+        maxHeight: MediaQuery.of(context).size.height * 0.8,
+      ),
+      context: context,
+      builder: (context) => FilterWidget(
+        filterBloc: _filterBloc,
       ),
     );
   }

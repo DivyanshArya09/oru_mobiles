@@ -7,3 +7,4 @@ const validateOtpUrl = '$baseUrl/login/otpValidate';
 //! home
 const getBrandsUrl = '$baseUrl/makeWithImages';
 const getFaqUrl = '$baseUrl/faq';
+const getFiltersUrl = '$baseUrl/showSearchFilters';

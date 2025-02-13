@@ -10,7 +10,7 @@ extension SnackBarTypeExtension on SnakBarType {
   Color get color {
     switch (this) {
       case SnakBarType.success:
-        return Colors.green;
+        return ColorPalette.darkestGrey;
       case SnakBarType.error:
         return Colors.red;
       case SnakBarType.info:

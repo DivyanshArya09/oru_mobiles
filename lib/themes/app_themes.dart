@@ -17,6 +17,9 @@ class AppThemes {
           return ColorPalette.white; // Default fill color (white)
         },
       ),
+      materialTapTargetSize:
+          MaterialTapTargetSize.shrinkWrap, // Minimize tap effect
+      splashRadius: 0, // Removes the ripple effect
       checkColor:
           MaterialStateProperty.all(ColorPalette.white), // Check icon color
       side: MaterialStateBorderSide.resolveWith((states) {

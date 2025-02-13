@@ -6,7 +6,8 @@ import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class BestDealsWidget extends StatelessWidget {
-  const BestDealsWidget({super.key});
+  final VoidCallback onFilterTap;
+  const BestDealsWidget({super.key, required this.onFilterTap});
 
   @override
   Widget build(BuildContext context) {
@@ -39,9 +40,16 @@ class BestDealsWidget extends StatelessWidget {
           child: ListView.separated(
             scrollDirection: Axis.horizontal,
             itemBuilder: (context, index) {
-              return _buildChip(
-                entity: BestDealsEntity.getBestDealsConstants[index],
-                context: context,
+              return GestureDetector(
+                onTap: () {
+                  if (index == 1) {
+                    onFilterTap();
+                  }
+                },
+                child: _buildChip(
+                  entity: BestDealsEntity.getBestDealsConstants[index],
+                  context: context,
+                ),
               );
             },
             separatorBuilder: (context, index) => CustomSpacers.width10,
