@@ -25,4 +25,7 @@ class AppAssets {
   static String banner4 = 'assets/images/Banner 4.png';
   static String banner5 = 'assets/images/Banner 5.png';
   static String oruStores = 'assets/icons/orustores 1.svg';
+  static String upSideDownArrowIcon = 'assets/icons/upSideDown.svg';
+  static String filterIcon = 'assets/icons/filter.svg';
+  static String oruVerified = 'assets/icons/ORUVerified.svg';
 }

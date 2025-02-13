@@ -4,13 +4,17 @@ import 'package:flutter_svg/svg.dart';
 import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
+import 'package:oru_mobiles/core/helpers/user_helper.dart';
 import 'package:oru_mobiles/features/home/presentation/bloc/home_bloc.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/best_deals_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/carousel_slider.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/custom_side_bar.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/persistent_header.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/product_grid.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/top_brands_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/what_on_your_mind_widget.dart';
 import 'package:oru_mobiles/injection_container/injection_container.dart';
+import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/ui/app_logo.dart';
 import 'package:oru_mobiles/ui/custom_button.dart';
 import 'package:oru_mobiles/ui/shimmer_container.dart';
@@ -67,32 +71,63 @@ class _HomeScreenState extends State<HomeScreen> {
                 _buildAdaptorBox(const WhatsOnYourMindWidget()),
                 if (state is HomeLoadingState) ...[
                   _buildAdaptorBox(
-                    SizedBox(
-                      height: MediaQuery.of(context).size.height * .3,
-                      child: ListView.separated(
-                        shrinkWrap: true,
-                        physics: const NeverScrollableScrollPhysics(),
-                        separatorBuilder: (context, index) =>
-                            CustomSpacers.width16,
-                        itemBuilder: (context, index) => const ShimmerContainer(
-                          height: 72,
-                          width: 72,
-                          decoration: BoxDecoration(
-                            shape: BoxShape.circle,
-                            color: ColorPalette.borderColorLight,
+                    Column(
+                      mainAxisSize: MainAxisSize.min,
+                      crossAxisAlignment: CrossAxisAlignment.start,
+                      children: [
+                        CustomSpacers.height20,
+                        Row(
+                          children: [
+                            Text(
+                              'Top Brands',
+                              style: AppTextThemes.of(context)
+                                  .titleLarge
+                                  ?.copyWith(
+                                    color: ColorPalette.darkestGrey,
+                                    fontWeight: FontWeight.w400,
+                                  ),
+                            ),
+                            const Spacer(),
+                            const Icon(
+                              Icons.arrow_forward_ios_sharp,
+                              color: ColorPalette.darktext,
+                            )
+                          ],
+                        ),
+                        SizedBox(
+                          height: MediaQuery.of(context).size.height * .15,
+                          child: ListView.separated(
+                            shrinkWrap: true,
+                            physics: const NeverScrollableScrollPhysics(),
+                            separatorBuilder: (context, index) =>
+                                CustomSpacers.width16,
+                            itemBuilder: (context, index) =>
+                                const ShimmerContainer(
+                              height: 72,
+                              width: 72,
+                              decoration: BoxDecoration(
+                                shape: BoxShape.circle,
+                                color: ColorPalette.borderColorLight,
+                              ),
+                            ),
+                            itemCount: 6,
+                            scrollDirection: Axis.horizontal,
                           ),
                         ),
-                        itemCount: 6,
-                        scrollDirection: Axis.horizontal,
-                      ),
+                      ],
                     ),
                   ),
                 ],
-                if (state is! HomeLoadingState) ...[
+                if (state is! HomeLoadingState &&
+                    _bloc.mobileBrands.isNotEmpty) ...[
                   _buildAdaptorBox(CustomSpacers.height20),
                   _buildAdaptorBox(TopBrandsWidget(brands: _bloc.mobileBrands)),
                 ],
-                SliverToBoxAdapter(child: CustomSpacers.height120),
+                _buildAdaptorBox(CustomSpacers.height20),
+                _buildAdaptorBox(
+                  const BestDealsWidget(),
+                ),
+                const SliverToBoxAdapter(child: ProductGrid()),
               ],
             );
           },
@@ -143,19 +178,27 @@ class _HomeScreenState extends State<HomeScreen> {
               const Icon(Icons.location_on_outlined,
                   color: ColorPalette.darktext),
               CustomSpacers.width12,
-              CustomButton(
-                strButtonText: 'Login',
-                buttonAction: () {},
-                bgColor: ColorPalette.action,
-                borderColor: ColorPalette.action,
-                dHeight: 30,
-                textStyle: const TextStyle(
-                  fontSize: 12,
-                  fontWeight: FontWeight.w600,
-                  color: ColorPalette.darktext,
+              if (UserHelper.getIsloggedIn() == false) ...[
+                CustomButton(
+                  strButtonText: 'Login',
+                  buttonAction: () {},
+                  bgColor: ColorPalette.action,
+                  borderColor: ColorPalette.action,
+                  dHeight: 30,
+                  textStyle: const TextStyle(
+                    fontSize: 12,
+                    fontWeight: FontWeight.w600,
+                    color: ColorPalette.darktext,
+                  ),
+                  dWidth: 66,
                 ),
-                dWidth: 66,
-              ),
+              ],
+              if (UserHelper.getIsloggedIn() == true) ...[
+                const Icon(
+                  Icons.notifications_none_outlined,
+                  color: Colors.black,
+                ),
+              ],
               CustomSpacers.width10,
             ],
           ),

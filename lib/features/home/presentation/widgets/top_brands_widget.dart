@@ -18,24 +18,73 @@ class TopBrandsWidget extends StatelessWidget {
       mainAxisSize: MainAxisSize.min,
       crossAxisAlignment: CrossAxisAlignment.start,
       children: [
-        Text(
-          'Top Brands',
-          style: AppTextThemes.of(context).titleLarge?.copyWith(
-                color: ColorPalette.darkestGrey,
-                fontWeight: FontWeight.w400,
-              ),
+        Row(
+          children: [
+            Text(
+              'Top Brands',
+              style: AppTextThemes.of(context).titleLarge?.copyWith(
+                    color: ColorPalette.darkestGrey,
+                    fontWeight: FontWeight.w400,
+                  ),
+            ),
+            const Spacer(),
+            const Icon(
+              Icons.arrow_forward_ios_sharp,
+              color: ColorPalette.darktext,
+            )
+          ],
         ),
         CustomSpacers.height16,
         SizedBox(
-          height: MediaQuery.of(context).size.height * .3,
-          child: ListView.separated(
-            separatorBuilder: (context, index) => CustomSpacers.width16,
-            itemBuilder: (context, index) => _buildChip(brands[index], context),
-            itemCount: brands.length,
+          height: MediaQuery.of(context).size.height * .13,
+          width: MediaQuery.of(context).size.width,
+          child: ListView.builder(
+            itemBuilder: (context, index) => Padding(
+              padding: EdgeInsets.only(right: 16.w),
+              child: index >= 9
+                  ? _buildViewAllChip(context)
+                  : _buildChip(brands[index], context),
+            ),
+            itemCount: 10,
             scrollDirection: Axis.horizontal,
           ),
         ),
       ],
+    );
+  }
+
+  Widget _buildViewAllChip(BuildContext context) {
+    return Align(
+      alignment: Alignment.topCenter,
+      child: Container(
+        width: 72.w,
+        height: 72.h,
+        // padding: const EdgeInsets.all(16),
+        alignment: Alignment.center,
+        decoration: const BoxDecoration(
+          shape: BoxShape.circle,
+          color: ColorPalette.lightestGrey,
+        ),
+        child: FittedBox(
+          fit: BoxFit.contain,
+          child: Row(
+            mainAxisSize: MainAxisSize.min,
+            mainAxisAlignment: MainAxisAlignment.center,
+            crossAxisAlignment: CrossAxisAlignment.center,
+            children: [
+              Text(
+                'View All',
+                style: AppTextThemes.of(context).labelMedium,
+              ),
+              const Icon(
+                Icons.arrow_forward,
+                color: ColorPalette.darktext,
+                size: 16,
+              ),
+            ],
+          ),
+        ),
+      ),
     );
   }
 
