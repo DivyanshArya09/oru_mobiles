@@ -29,6 +29,7 @@ class _FilterWidgetState extends State<FilterWidget> {
   @override
   Widget build(BuildContext context) {
     return BlocBuilder<FilterBloc, FilterState>(
+      buildWhen: (previous, current) => !_filterBloc.isProductsState,
       bloc: _filterBloc,
       builder: (context, state) {
         return Container(
@@ -130,18 +131,27 @@ class _FilterWidgetState extends State<FilterWidget> {
         child: Row(
           children: [
             CustomSpacers.width32,
-            Text(
-              'Clear all',
-              style: AppTextThemes.of(context).bodyMedium?.copyWith(
-                    color: ColorPalette.action,
-                  ),
+            GestureDetector(
+              onTap: () {
+                Navigator.pop(context);
+                _filterBloc.resetFilters(isReset: true);
+              },
+              child: Text(
+                'Clear all',
+                style: AppTextThemes.of(context).bodyMedium?.copyWith(
+                      color: ColorPalette.action,
+                    ),
+              ),
             ),
             const Spacer(),
             CustomButton(
               dWidth: 140.w,
               dHeight: 40,
               strButtonText: 'Apply',
-              buttonAction: () {},
+              buttonAction: () {
+                Navigator.pop(context);
+                _filterBloc.applyFilters();
+              },
               buttonType: ButtonType.primary,
               borderColor: Colors.transparent,
               bgColor: ColorPalette.action,

@@ -4,6 +4,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:flutter_svg/svg.dart';
 import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
+import 'package:oru_mobiles/features/home/data/models/product_model.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/favourite_icon.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
 import 'package:oru_mobiles/ui/shimmer_container.dart';
@@ -11,7 +12,9 @@ import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 class ProductCard extends StatelessWidget {
   final Function(bool? isFavourite) onFavouriteTap;
-  const ProductCard({super.key, required this.onFavouriteTap});
+  final ProductModel product;
+  const ProductCard(
+      {super.key, required this.onFavouriteTap, required this.product});
 
   @override
   Widget build(BuildContext context) {
@@ -70,13 +73,13 @@ class ProductCard extends StatelessWidget {
                   width: 70,
                   child: Text(
                     overflow: TextOverflow.ellipsis,
-                    'Nijampur, Lucknow',
+                    '${product.listingLocation}, ${product.listingState}',
                     style: AppTextThemes.of(context).labelMedium,
                   ),
                 ),
                 const Spacer(),
                 Text(
-                  '13 feb',
+                  product.listingDate,
                   style: AppTextThemes.of(context).labelMedium,
                 ),
               ],
@@ -95,14 +98,16 @@ class ProductCard extends StatelessWidget {
         children: [
           CustomSpacers.height16,
           Text(
-            'Apple iPhone 13 Pro',
+            product.marketingName,
+            maxLines: 1,
+            overflow: TextOverflow.ellipsis,
             style: AppTextThemes.of(context).bodyMedium,
           ),
           CustomSpacers.height10,
           Row(
             children: [
               Text(
-                '12/256 GB',
+                '${product.deviceRam}/${product.deviceStorage} GB',
                 style: AppTextThemes.of(context).labelSmall,
               ),
               Container(
@@ -115,13 +120,13 @@ class ProductCard extends StatelessWidget {
                 ),
               ),
               Text(
-                'Like New',
+                product.deviceCondition,
                 style: AppTextThemes.of(context).labelSmall,
               )
             ],
           ),
           Text(
-            '₹ 1,00,000',
+            '₹ ${product.listingPrice}',
             style: AppTextThemes.of(context).titleLarge,
           ),
           // const Spacer(),
@@ -143,8 +148,7 @@ class ProductCard extends StatelessWidget {
               ),
               child: CachedNetworkImage(
                 fit: BoxFit.cover,
-                imageUrl:
-                    'https://i.guim.co.uk/img/media/6ead18d1b23b6cdaa33f6731c0c417a8f0576552/539_452_3726_2236/master/3726.jpg?width=445&dpr=1&s=none&crop=none',
+                imageUrl: product.imagePath,
                 errorWidget: (context, url, error) => const Icon(Icons.error),
                 placeholder: (context, url) => ShimmerContainer(
                   height: 174.h,
@@ -159,18 +163,21 @@ class ProductCard extends StatelessWidget {
               ),
             ),
           ),
-          Align(
-            alignment: Alignment.bottomCenter,
-            child: Container(
-              height: 25,
-              alignment: Alignment.center,
-              // padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
-              color: const Color.fromRGBO(76, 76, 76, 0.69),
-              child: Text(
-                'Price Negotiable'.toUpperCase(),
-                style: AppTextThemes.of(context).labelSmall?.copyWith(
-                      color: ColorPalette.white,
-                    ),
+          Visibility(
+            visible: product.openForNegotiation,
+            child: Align(
+              alignment: Alignment.bottomCenter,
+              child: Container(
+                height: 25,
+                alignment: Alignment.center,
+                // padding: const EdgeInsets.symmetric(vertical: 8, horizontal: 16),
+                color: const Color.fromRGBO(76, 76, 76, 0.69),
+                child: Text(
+                  'Price Negotiable'.toUpperCase(),
+                  style: AppTextThemes.of(context).labelSmall?.copyWith(
+                        color: ColorPalette.white,
+                      ),
+                ),
               ),
             ),
           ),
@@ -183,8 +190,11 @@ class ProductCard extends StatelessWidget {
                 mainAxisAlignment: MainAxisAlignment.center,
                 crossAxisAlignment: CrossAxisAlignment.center,
                 children: [
-                  SvgPicture.asset(
-                    AppAssets.oruVerified,
+                  Visibility(
+                    visible: product.verified,
+                    child: SvgPicture.asset(
+                      AppAssets.oruVerified,
+                    ),
                   ),
                   const Spacer(),
                   FavouriteIcon(

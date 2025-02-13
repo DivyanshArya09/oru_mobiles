@@ -47,7 +47,7 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         _bloc.getMobileBrands().then((value) => _bloc.getFaqs());
-        _filterBloc.getFilters();
+        _filterBloc.getFilters().then((value) => _filterBloc.getProducts());
       },
     );
     super.initState();
@@ -142,7 +142,11 @@ class _HomeScreenState extends State<HomeScreen> {
                     },
                   ),
                 ),
-                const SliverToBoxAdapter(child: ProductGrid()),
+                SliverToBoxAdapter(
+                  child: ProductGrid(
+                    filterBloc: _filterBloc,
+                  ),
+                ),
                 _buildAdaptorBox(CustomSpacers.height20),
                 if (state is GetFaqLoadingState) ...[
                   _buildAdaptorBox(const FaqSkelTon()),

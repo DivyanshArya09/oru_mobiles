@@ -2,21 +2,55 @@ import 'package:bloc/bloc.dart';
 import 'package:equatable/equatable.dart';
 import 'package:oru_mobiles/core/usecases/use_case.dart';
 import 'package:oru_mobiles/features/home/data/models/filter_response_model.dart';
+import 'package:oru_mobiles/features/home/data/models/product_model.dart';
 import 'package:oru_mobiles/features/home/domain/entities/filter_entity.dart';
+import 'package:oru_mobiles/features/home/domain/entities/get_products_filter_entity.dart';
 import 'package:oru_mobiles/features/home/domain/usecases/get_filters_use_case.dart';
+import 'package:oru_mobiles/features/home/domain/usecases/get_products_use_case.dart';
 
 part 'filter_state.dart';
 
 class FilterBloc extends Cubit<FilterState> {
   final GetFiltersUseCase _getFiltersUseCase;
-  FilterBloc({
-    required GetFiltersUseCase getFiltersUseCase,
-  })  : _getFiltersUseCase = getFiltersUseCase,
+  final GetProductsUseCase _getProductsUseCase;
+  FilterBloc(
+      {required GetFiltersUseCase getFiltersUseCase,
+      required GetProductsUseCase getProductsUseCase})
+      : _getFiltersUseCase = getFiltersUseCase,
+        _getProductsUseCase = getProductsUseCase,
         super(FilterInitial());
+
+  bool get isProductsState =>
+      state is ProductsLoaded ||
+      state is ProductsError ||
+      state is ProductsLoading;
 
   List<FilterEntity> filters = [];
 
   int parentIndex = 0;
+
+  GetProductsFilterEntity _entity = GetProductsFilterEntity.toDefault();
+
+  Future<void> applyFilters() async {
+    _entity = GetProductsFilterEntity(
+      filters: filters,
+    );
+    getProducts();
+  }
+
+  Future<void> getProducts() async {
+    emit(ProductsLoading());
+    final result = await _getProductsUseCase(_entity);
+    result.fold((failure) {
+      emit(
+        ProductsError(
+          message: failure.message ?? 'Failed to get products',
+        ),
+      );
+    }, (res) {
+      emit(ProductsLoaded(products: res));
+    });
+  }
 
   void parentLabelChanged(int index) {
     emit(Trying());
@@ -50,7 +84,7 @@ class FilterBloc extends Cubit<FilterState> {
     emit(Success());
   }
 
-  void resetFilters() {
+  void resetFilters({bool isReset = false}) {
     emit(Trying());
     for (int i = 0; i < filters.length; i++) {
       filters[i] = filters[i].reset();
@@ -58,6 +92,10 @@ class FilterBloc extends Cubit<FilterState> {
     filters[0] = filters[0].copyWith(isSelected: true);
     parentIndex = 0;
     emit(Success());
+    _entity = GetProductsFilterEntity.toDefault();
+    if (isReset) {
+      getProducts();
+    }
   }
 
   Future<void> getFilters() async {

@@ -11,6 +11,7 @@ import 'package:oru_mobiles/features/home/data/repository/home_repositiry.dart';
 import 'package:oru_mobiles/features/home/domain/usecases/get_faqs_use_case.dart';
 import 'package:oru_mobiles/features/home/domain/usecases/get_filters_use_case.dart';
 import 'package:oru_mobiles/features/home/domain/usecases/get_mobile_brands_use_case.dart';
+import 'package:oru_mobiles/features/home/domain/usecases/get_products_use_case.dart';
 import 'package:oru_mobiles/features/home/presentation/blocs/filter_bloc/filter_bloc.dart';
 import 'package:oru_mobiles/features/home/presentation/blocs/home_bloc/home_bloc.dart';
 
@@ -84,8 +85,14 @@ void home() {
       homeRepository: sl(),
     ),
   );
+  sl.registerLazySingleton(
+    () => GetProductsUseCase(
+      homeRepository: sl(),
+    ),
+  );
   sl.registerFactory(
     () => FilterBloc(
+      getProductsUseCase: sl(),
       getFiltersUseCase: sl(),
     ),
   );

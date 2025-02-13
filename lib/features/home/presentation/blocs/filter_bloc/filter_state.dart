@@ -24,3 +24,15 @@ final class FilterLoaded extends FilterState {
 final class Trying extends FilterState {}
 
 final class Success extends FilterState {}
+
+final class ProductsLoaded extends FilterState {
+  final List<ProductModel> products;
+  const ProductsLoaded({required this.products});
+}
+
+final class ProductsError extends FilterState {
+  final String message;
+  const ProductsError({required this.message});
+}
+
+final class ProductsLoading extends FilterState {}

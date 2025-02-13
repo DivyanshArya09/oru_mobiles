@@ -8,3 +8,4 @@ const validateOtpUrl = '$baseUrl/login/otpValidate';
 const getBrandsUrl = '$baseUrl/makeWithImages';
 const getFaqUrl = '$baseUrl/faq';
 const getFiltersUrl = '$baseUrl/showSearchFilters';
+const getProductsUrl = '$baseUrl/filter';

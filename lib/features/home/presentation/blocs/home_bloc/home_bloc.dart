@@ -11,6 +11,7 @@ part 'home_state.dart';
 class HomeBloc extends Cubit<HomeState> {
   final GetMobileBrandsUseCase _getMobileBrandsUseCase;
   final GetFaqsUseCase _getFaqsUseCase;
+
   HomeBloc(
       {required GetMobileBrandsUseCase getMobileBrandsUseCase,
       required GetFaqsUseCase getFaqsUseCase})
