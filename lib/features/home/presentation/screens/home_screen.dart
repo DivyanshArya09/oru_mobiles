@@ -6,7 +6,7 @@ import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
 import 'package:oru_mobiles/features/home/presentation/bloc/home_bloc.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/carousel_slider.dart';
-import 'package:oru_mobiles/features/home/presentation/widgets/cutom_side_bar.dart';
+import 'package:oru_mobiles/features/home/presentation/widgets/custom_side_bar.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/persistent_header.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/top_brands_widget.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/what_on_your_mind_widget.dart';

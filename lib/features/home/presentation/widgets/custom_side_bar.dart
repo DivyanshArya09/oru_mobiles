@@ -23,18 +23,17 @@ class CustomSideBar extends StatefulWidget {
 class _CustomSideBarState extends State<CustomSideBar> {
   @override
   Widget build(BuildContext context) {
-    return Drawer(
-      backgroundColor: ColorPalette.white,
-      width: MediaQuery.of(context).size.width,
-      child: SizedBox(
-        height: MediaQuery.of(context).size.height,
+    return SizedBox(
+      width: MediaQuery.of(context).size.width * .8,
+      child: Drawer(
+        backgroundColor: ColorPalette.white,
         child: Column(
           children: [
             Container(
-              margin: EdgeInsets.only(top: 42.h),
+              margin: EdgeInsets.only(top: 16.h),
               padding: EdgeInsets.all(12.w),
               color: ColorPalette.borderColorLight.withOpacity(.6),
-              width: double.infinity,
+              // width: double.infinity,
               // height: 60.h,
               alignment: Alignment.center,
               child: Column(
@@ -72,6 +71,7 @@ class _CustomSideBarState extends State<CustomSideBar> {
                   if (UserHelper.getIsloggedIn() == false) ...[
                     CustomSpacers.height24,
                     CustomButton(
+                      dHeight: 40.h,
                       strButtonText: 'Login/SignUp',
                       buttonAction: () => CustomNavigator.pushAndRemoveUntil(
                         context,
@@ -80,8 +80,9 @@ class _CustomSideBarState extends State<CustomSideBar> {
                       buttonType: ButtonType.secondary,
                     ),
                   ],
-                  CustomSpacers.height10,
+                  CustomSpacers.height20,
                   CustomButton(
+                    dHeight: 40.h,
                     strButtonText: 'Sell Your Phone',
                     buttonAction: () {},
                     textColor: ColorPalette.darktext,
@@ -89,7 +90,7 @@ class _CustomSideBarState extends State<CustomSideBar> {
                     borderColor: ColorPalette.action,
                     textStyle: const TextStyle(
                       fontSize: 16,
-                      fontWeight: FontWeight.w600,
+                      // fontWeight: FontWeight.w600,
                       color: ColorPalette.darktext,
                     ),
                     buttonType: ButtonType.secondary,
