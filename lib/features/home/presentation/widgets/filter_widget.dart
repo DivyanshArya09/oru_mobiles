@@ -115,6 +115,17 @@ class _FilterWidgetState extends State<FilterWidget> {
         width: MediaQuery.of(context).size.width * .6,
         child: SingleChildScrollView(
           child: FilterCheckList(
+            label: _filterBloc.filters[_filterBloc.parentIndex].label ==
+                    'Conditions'
+                ? 'Condition\'s'
+                : '${_filterBloc.filters[_filterBloc.parentIndex].label}\'s',
+            isCondition: _filterBloc.filters[_filterBloc.parentIndex].label ==
+                'Conditions',
+            isAllSelected:
+                _filterBloc.filters[_filterBloc.parentIndex].isAllSelected,
+            onAllSelected: (v) {
+              _filterBloc.selectAllChild(v);
+            },
             filterLabelEntity:
                 _filterBloc.filters[_filterBloc.parentIndex].options,
             onChanged: (p0, p1) {

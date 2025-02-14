@@ -2,13 +2,15 @@ class FilterEntity {
   final String label;
   final bool isSelected;
   int selectedValues;
-  final List<FilterLabelEntity> options;
+  List<FilterLabelEntity> options;
+  final bool? isAllSelected;
 
   FilterEntity({
     required this.label,
     required this.isSelected,
     required this.selectedValues,
     required this.options,
+    this.isAllSelected,
   });
 
   factory FilterEntity.toEmpty() {
@@ -17,6 +19,7 @@ class FilterEntity {
       isSelected: false,
       selectedValues: 0,
       options: [],
+      isAllSelected: false,
     );
   }
 
@@ -25,6 +28,7 @@ class FilterEntity {
       label: label,
       isSelected: false,
       selectedValues: 0,
+      isAllSelected: false,
       options: options.map((e) => e.copyWith(isSelected: false)).toList(),
     );
   }
@@ -34,12 +38,14 @@ class FilterEntity {
     bool? isSelected,
     int? selectedValues,
     List<FilterLabelEntity>? options,
+    bool? isAllSelected,
   }) {
     return FilterEntity(
       label: label ?? this.label,
       isSelected: isSelected ?? this.isSelected,
       selectedValues: selectedValues ?? this.selectedValues,
       options: options ?? this.options,
+      isAllSelected: isAllSelected ?? this.isAllSelected,
     );
   }
 }

@@ -73,6 +73,24 @@ class FilterBloc extends Cubit<FilterState> {
     emit(Success());
   }
 
+  void selectAllChild(bool isSelected) {
+    emit(Trying());
+    filters[parentIndex] = filters[parentIndex].copyWith(
+      isAllSelected: isSelected,
+    );
+    filters[parentIndex].options = filters[parentIndex]
+        .options
+        .map((e) => e.copyWith(isSelected: isSelected))
+        .toList();
+    if (isSelected) {
+      filters[parentIndex] = filters[parentIndex]
+          .copyWith(selectedValues: filters[parentIndex].options.length);
+    } else {
+      filters[parentIndex] = filters[parentIndex].copyWith(selectedValues: 0);
+    }
+    emit(Success());
+  }
+
   void childLabelChanged(int parentIndex, int childIndex, bool isSelected) {
     emit(Trying());
     filters[parentIndex].options[childIndex] = filters[parentIndex]
