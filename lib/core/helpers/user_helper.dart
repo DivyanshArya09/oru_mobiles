@@ -12,13 +12,21 @@ class UserHelper {
     SharedPreferencesManager.setString(userName, name);
   }
 
+  static setFcmToken(String token) {
+    SharedPreferencesManager.setString(fcmToken, token);
+  }
+
+  static String getFcmToken() {
+    return SharedPreferencesManager.getString(fcmToken);
+  }
+
   static setJoiningDate(String date) {
     SharedPreferencesManager.setString(joinedDate, date);
   }
 
   static setIsloggedIn(bool isLoggedIn) {
     SharedPreferencesManager.setBool(isUserLoggedIN, isLoggedIn);
-    UserAuthStream.broadcastStream(isLoggedIn);
+    userAuthStream.sink.add(isLoggedIn);
   }
 
   static String getUserName() {
@@ -44,7 +52,7 @@ class UserHelper {
 
     kNavigatorKey.currentState!
         .pushNamedAndRemoveUntil(AppRouter.splashScreen, (route) => false);
-    userAuthStream.close();
+    userAuthStream.sink.add(false);
   }
 }
 
