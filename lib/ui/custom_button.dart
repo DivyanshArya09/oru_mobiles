@@ -126,7 +126,7 @@ class CustomButton extends StatelessWidget {
                             color: textColor,
                           ),
                   ),
-            if (icon != null)
+            if (icon != null && !isLoading)
               Container(
                 color: Colors.transparent,
                 margin: const EdgeInsets.only(left: 10),

@@ -53,32 +53,41 @@ class ProductModel {
 
   factory ProductModel.fromJson(Map<String, dynamic> json) {
     return ProductModel(
-      id: json['_id'],
-      deviceCondition: json['deviceCondition'],
-      listedBy: json['listedBy'],
-      deviceStorage: json['deviceStorage'],
-      images: (json['images'] as List)
-          .map((img) => ImageModel.fromJson(img))
-          .toList(),
-      defaultImage: DefaultImageModel.fromJson(json['defaultImage']),
-      listingState: json['listingState'],
-      listingLocation: json['listingLocation'],
-      listingLocality: json['listingLocality'],
-      listingPrice: json['listingPrice'],
-      make: json['make'],
-      marketingName: json['marketingName'],
-      openForNegotiation: json['openForNegotiation'],
-      verified: json['verified'],
-      listingId: json['listingId'],
-      status: json['status'],
-      verifiedDate: json['verifiedDate'],
-      listingDate: json['listingDate'],
-      deviceRam: json['deviceRam'],
-      warranty: json['warranty'],
-      imagePath: json['imagePath'],
-      createdAt: DateTime.parse(json['createdAt']),
-      updatedAt: DateTime.parse(json['updatedAt']),
-      location: LocationModel.fromJson(json['location']),
+      id: json['_id'] ?? '',
+      deviceCondition: json['deviceCondition'] ?? '',
+      listedBy: json['listedBy'] ?? '',
+      deviceStorage: json['deviceStorage'] ?? '',
+      images: (json['images'] as List?)
+              ?.map((img) => ImageModel.fromJson(img))
+              .toList() ??
+          [],
+      defaultImage: json['defaultImage'] != null
+          ? DefaultImageModel.fromJson(json['defaultImage'])
+          : DefaultImageModel(fullImage: '', id: ''),
+      listingState: json['listingState'] ?? '',
+      listingLocation: json['listingLocation'] ?? '',
+      listingLocality: json['listingLocality'] ?? '',
+      listingPrice: json['listingPrice'] ?? '',
+      make: json['make'] ?? '',
+      marketingName: json['marketingName'] ?? '',
+      openForNegotiation: json['openForNegotiation'] ?? false,
+      verified: json['verified'] ?? false,
+      listingId: json['listingId'] ?? '',
+      status: json['status'] ?? '',
+      verifiedDate: json['verifiedDate'] ?? '',
+      listingDate: json['listingDate'] ?? '',
+      deviceRam: json['deviceRam'] ?? '',
+      warranty: json['warranty'] ?? '',
+      imagePath: json['imagePath'] ?? '',
+      createdAt: json['createdAt'] != null
+          ? DateTime.parse(json['createdAt'])
+          : DateTime.now(),
+      updatedAt: json['updatedAt'] != null
+          ? DateTime.parse(json['updatedAt'])
+          : DateTime.now(),
+      location: json['location'] != null
+          ? LocationModel.fromJson(json['location'])
+          : LocationModel(type: '', coordinates: [], id: ''),
     );
   }
 

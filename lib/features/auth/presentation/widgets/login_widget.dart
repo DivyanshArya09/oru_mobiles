@@ -4,6 +4,7 @@ import 'package:flutter/material.dart';
 import 'package:flutter_bloc/flutter_bloc.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
+import 'package:oru_mobiles/core/helpers/user_helper.dart';
 import 'package:oru_mobiles/features/auth/domain/entities/generate_otp_entity.dart';
 import 'package:oru_mobiles/features/auth/presentation/bloc/auth_bloc.dart';
 import 'package:oru_mobiles/features/auth/presentation/utils/auth_validators.dart';
@@ -87,6 +88,9 @@ class _LoginWidgetState extends State<LoginWidget> {
                 otpWidgetType: OtpWidgetType.bottomSheet,
               ),
               title: 'Verify OTP',
+            ).then(
+              (value) =>
+                  value == false ? UserAuthStream.broadcastStream(false) : null,
             );
           }
         }

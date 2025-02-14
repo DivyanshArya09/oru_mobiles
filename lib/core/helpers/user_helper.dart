@@ -1,7 +1,11 @@
+import 'dart:async';
+
 import 'package:oru_mobiles/core/constants/shared_prefs_key.dart';
 import 'package:oru_mobiles/core/managers/shared_preferences_manger.dart';
 import 'package:oru_mobiles/routes/app_routes.dart';
 import 'package:oru_mobiles/routes/custom_navigator.dart';
+
+StreamController<bool> userAuthStream = StreamController.broadcast();
 
 class UserHelper {
   static setUserName(String name) {
@@ -14,6 +18,7 @@ class UserHelper {
 
   static setIsloggedIn(bool isLoggedIn) {
     SharedPreferencesManager.setBool(isUserLoggedIN, isLoggedIn);
+    UserAuthStream.broadcastStream(isLoggedIn);
   }
 
   static String getUserName() {
@@ -39,5 +44,14 @@ class UserHelper {
 
     kNavigatorKey.currentState!
         .pushNamedAndRemoveUntil(AppRouter.splashScreen, (route) => false);
+    userAuthStream.close();
+  }
+}
+
+class UserAuthStream {
+  static Stream<bool> getUserAuthStream() => userAuthStream.stream;
+
+  static void broadcastStream(bool value) {
+    userAuthStream.sink.add(value);
   }
 }

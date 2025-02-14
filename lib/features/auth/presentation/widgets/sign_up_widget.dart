@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
 import 'package:oru_mobiles/core/helpers/user_helper.dart';
 import 'package:oru_mobiles/features/auth/presentation/utils/auth_validators.dart';
 import 'package:oru_mobiles/routes/app_routes.dart';
@@ -67,6 +68,11 @@ class _SignUpWidgetState extends State<SignUpWidget> {
                     AppRouter.home,
                   );
                 } else {
+                  ScaffoldHelper.showSnackBar(
+                    context: context,
+                    message: 'Logged In Successfully',
+                    type: SnakBarType.success,
+                  );
                   Navigator.pop(context);
                 }
               }

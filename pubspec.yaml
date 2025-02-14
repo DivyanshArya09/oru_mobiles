@@ -50,6 +50,7 @@ dependencies:
   internet_connection_checker: ^3.0.1
   shared_preferences: ^2.2.3
   carousel_slider: ^5.0.0
+  http: ^1.2.2
 
 dev_dependencies:
   flutter_test:

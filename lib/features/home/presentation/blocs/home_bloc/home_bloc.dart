@@ -22,6 +22,11 @@ class HomeBloc extends Cubit<HomeState> {
   List<MobileBrandModel> mobileBrands = [];
   List<FaqModel> faqs = [];
 
+  Future<void> refresh() async {
+    await getMobileBrands();
+    await getFaqs();
+  }
+
   Future<void> getMobileBrands() async {
     emit(HomeLoadingState());
     final result = await _getMobileBrandsUseCase.call(NoParams());

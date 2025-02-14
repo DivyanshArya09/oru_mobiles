@@ -41,6 +41,12 @@ class _HomeScreenState extends State<HomeScreen> {
   late HomeBloc _bloc;
   late FilterBloc _filterBloc;
 
+  Future<void> _refresh() async {
+    _bloc.getMobileBrands();
+    _filterBloc.getProducts();
+    await _bloc.getFaqs();
+  }
+
   @override
   void initState() {
     _searchTC = TextEditingController();
@@ -49,7 +55,8 @@ class _HomeScreenState extends State<HomeScreen> {
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
         _bloc.getMobileBrands().then((value) => _bloc.getFaqs());
-        _filterBloc.getFilters().then((value) => _filterBloc.getProducts());
+        _filterBloc.getFilters();
+        _filterBloc.getProducts();
       },
     );
     super.initState();
@@ -73,99 +80,103 @@ class _HomeScreenState extends State<HomeScreen> {
             }
           },
           builder: (context, state) {
-            return CustomScrollView(
-              slivers: [
-                _buildSliverAppBar(),
-                PersistentHeader(
-                  searchController: _searchTC,
-                ),
-                _buildAdaptorBox(const CustomCarouselSlider()),
-                _buildAdaptorBox(CustomSpacers.height20),
-                _buildAdaptorBox(const WhatsOnYourMindWidget()),
-                if (state is HomeLoadingState) ...[
-                  _buildAdaptorBox(
-                    Column(
-                      mainAxisSize: MainAxisSize.min,
-                      crossAxisAlignment: CrossAxisAlignment.start,
-                      children: [
-                        CustomSpacers.height20,
-                        Row(
-                          children: [
-                            Text(
-                              'Top Brands',
-                              style: AppTextThemes.of(context)
-                                  .titleLarge
-                                  ?.copyWith(
-                                    color: ColorPalette.darkestGrey,
-                                    fontWeight: FontWeight.w400,
-                                  ),
-                            ),
-                            const Spacer(),
-                            const Icon(
-                              Icons.arrow_forward_ios_sharp,
-                              color: ColorPalette.darktext,
-                            )
-                          ],
-                        ),
-                        SizedBox(
-                          height: MediaQuery.of(context).size.height * .15,
-                          child: ListView.separated(
-                            shrinkWrap: true,
-                            physics: const NeverScrollableScrollPhysics(),
-                            separatorBuilder: (context, index) =>
-                                CustomSpacers.width16,
-                            itemBuilder: (context, index) =>
-                                const ShimmerContainer(
-                              height: 72,
-                              width: 72,
-                              decoration: BoxDecoration(
-                                shape: BoxShape.circle,
-                                color: ColorPalette.borderColorLight,
+            return RefreshIndicator(
+              onRefresh: () => _refresh(),
+              child: CustomScrollView(
+                slivers: [
+                  _buildSliverAppBar(),
+                  PersistentHeader(
+                    searchController: _searchTC,
+                  ),
+                  _buildAdaptorBox(const CustomCarouselSlider()),
+                  _buildAdaptorBox(CustomSpacers.height20),
+                  _buildAdaptorBox(const WhatsOnYourMindWidget()),
+                  if (state is HomeLoadingState) ...[
+                    _buildAdaptorBox(
+                      Column(
+                        mainAxisSize: MainAxisSize.min,
+                        crossAxisAlignment: CrossAxisAlignment.start,
+                        children: [
+                          CustomSpacers.height20,
+                          Row(
+                            children: [
+                              Text(
+                                'Top Brands',
+                                style: AppTextThemes.of(context)
+                                    .titleLarge
+                                    ?.copyWith(
+                                      color: ColorPalette.darkestGrey,
+                                      fontWeight: FontWeight.w400,
+                                    ),
                               ),
-                            ),
-                            itemCount: 6,
-                            scrollDirection: Axis.horizontal,
+                              const Spacer(),
+                              const Icon(
+                                Icons.arrow_forward_ios_sharp,
+                                color: ColorPalette.darktext,
+                              )
+                            ],
                           ),
-                        ),
-                      ],
+                          SizedBox(
+                            height: MediaQuery.of(context).size.height * .15,
+                            child: ListView.separated(
+                              shrinkWrap: true,
+                              physics: const NeverScrollableScrollPhysics(),
+                              separatorBuilder: (context, index) =>
+                                  CustomSpacers.width16,
+                              itemBuilder: (context, index) =>
+                                  const ShimmerContainer(
+                                height: 72,
+                                width: 72,
+                                decoration: BoxDecoration(
+                                  shape: BoxShape.circle,
+                                  color: ColorPalette.borderColorLight,
+                                ),
+                              ),
+                              itemCount: 6,
+                              scrollDirection: Axis.horizontal,
+                            ),
+                          ),
+                        ],
+                      ),
                     ),
-                  ),
-                ],
-                if (state is! HomeLoadingState &&
-                    _bloc.mobileBrands.isNotEmpty) ...[
-                  _buildAdaptorBox(CustomSpacers.height20),
-                  _buildAdaptorBox(TopBrandsWidget(brands: _bloc.mobileBrands)),
-                ],
-                _buildAdaptorBox(CustomSpacers.height20),
-                _buildAdaptorBox(
-                  BestDealsWidget(
-                    onFilterTap: () {
-                      _showFilterSheet(context);
-                    },
-                    onSortTap: () {
-                      _showSortSheet(context);
-                    },
-                  ),
-                ),
-                SliverToBoxAdapter(
-                  child: ProductGrid(
-                    filterBloc: _filterBloc,
-                  ),
-                ),
-                _buildAdaptorBox(CustomSpacers.height20),
-                if (state is GetFaqLoadingState) ...[
-                  _buildAdaptorBox(const FaqSkelTon()),
-                ],
-                if (_bloc.faqs.isNotEmpty) ...[
+                  ],
+                  if (state is! HomeLoadingState &&
+                      _bloc.mobileBrands.isNotEmpty) ...[
+                    _buildAdaptorBox(CustomSpacers.height20),
+                    _buildAdaptorBox(
+                        TopBrandsWidget(brands: _bloc.mobileBrands)),
+                  ],
                   _buildAdaptorBox(CustomSpacers.height20),
                   _buildAdaptorBox(
-                    FAQWidget(
-                      faqs: _bloc.faqs,
+                    BestDealsWidget(
+                      onFilterTap: () {
+                        _showFilterSheet(context);
+                      },
+                      onSortTap: () {
+                        _showSortSheet(context);
+                      },
                     ),
                   ),
+                  SliverToBoxAdapter(
+                    child: ProductGrid(
+                      filterBloc: _filterBloc,
+                    ),
+                  ),
+                  _buildAdaptorBox(CustomSpacers.height20),
+                  if (state is GetFaqLoadingState) ...[
+                    _buildAdaptorBox(const FaqSkelTon()),
+                  ],
+                  if (_bloc.faqs.isNotEmpty) ...[
+                    _buildAdaptorBox(CustomSpacers.height20),
+                    _buildAdaptorBox(
+                      FAQWidget(
+                        faqs: _bloc.faqs,
+                      ),
+                    ),
+                  ],
+                  _buildAdaptorBox(CustomSpacers.height120),
                 ],
-                _buildAdaptorBox(CustomSpacers.height120),
-              ],
+              ),
             );
           },
         ),
@@ -216,27 +227,34 @@ class _HomeScreenState extends State<HomeScreen> {
                   color: ColorPalette.darktext),
               CustomSpacers.width12,
               if (UserHelper.getIsloggedIn() == false) ...[
-                CustomButton(
-                  strButtonText: 'Login',
-                  buttonAction: () => CustomNavigator.pushAndRemoveUntil(
-                    context,
-                    AppRouter.login,
-                  ),
-                  bgColor: ColorPalette.action,
-                  borderColor: ColorPalette.action,
-                  dHeight: 30,
-                  textStyle: const TextStyle(
-                    fontSize: 12,
-                    fontWeight: FontWeight.w600,
-                    color: ColorPalette.darktext,
-                  ),
-                  dWidth: 66,
-                ),
-              ],
-              if (UserHelper.getIsloggedIn() == true) ...[
-                const Icon(
-                  Icons.notifications_none_outlined,
-                  color: Colors.black,
+                StreamBuilder<bool>(
+                  stream: UserAuthStream.getUserAuthStream(),
+                  builder: (context, snapshot) {
+                    if ((snapshot.connectionState == ConnectionState.active &&
+                            snapshot.data == false) ||
+                        UserHelper.getIsloggedIn() == false) {
+                      return CustomButton(
+                        strButtonText: 'Login',
+                        buttonAction: () => CustomNavigator.pushAndRemoveUntil(
+                          context,
+                          AppRouter.login,
+                        ),
+                        bgColor: ColorPalette.action,
+                        borderColor: ColorPalette.action,
+                        dHeight: 30,
+                        textStyle: const TextStyle(
+                          fontSize: 12,
+                          fontWeight: FontWeight.w600,
+                          color: ColorPalette.darktext,
+                        ),
+                        dWidth: 66,
+                      );
+                    }
+                    return const Icon(
+                      Icons.notifications_none_outlined,
+                      color: Colors.black,
+                    );
+                  },
                 ),
               ],
               CustomSpacers.width10,

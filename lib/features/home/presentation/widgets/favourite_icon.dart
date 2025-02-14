@@ -15,32 +15,41 @@ class _FavouriteIconState extends State<FavouriteIcon> {
   bool _isSelected = false;
   @override
   Widget build(BuildContext context) {
-    return GestureDetector(
-      onTap: () {
-        setState(() {
-          _isSelected = !_isSelected;
-          widget.onChanged(_isSelected);
-        });
+    return StreamBuilder<bool>(
+        initialData: false,
+        stream: UserAuthStream.getUserAuthStream(),
+        builder: (context, snapshot) {
+          return GestureDetector(
+            onTap: () {
+              setState(() {
+                _isSelected = !(_isSelected && snapshot.data == true);
+                widget.onChanged(_isSelected);
+              });
 
-        if (_isSelected == true && UserHelper.getIsloggedIn() == false) {
-          ScaffoldHelper.showBottomSheet(
-            context: context,
-            child: const LoginWidget(
-              loginWidgetType: LoginWidgetType.bottomSheet,
+              if (_isSelected == true && UserHelper.getIsloggedIn() == false) {
+                ScaffoldHelper.showBottomSheet(
+                  context: context,
+                  child: const LoginWidget(
+                    loginWidgetType: LoginWidgetType.bottomSheet,
+                  ),
+                  title: 'Sign in to continue',
+                ).then((value) => setState(() {
+                      _isSelected = value ?? true;
+                    }));
+              }
+            },
+            child: Padding(
+              padding: const EdgeInsets.only(bottom: 8, right: 8),
+              child: Icon(
+                (_isSelected && snapshot.data == true)
+                    ? Icons.favorite
+                    : Icons.favorite_border_outlined,
+                color: (_isSelected && snapshot.data == true)
+                    ? Colors.red
+                    : Colors.white,
+              ),
             ),
-            title: 'Sign in to continue',
-          ).then((value) => setState(() {
-                _isSelected = value ?? true;
-              }));
-        }
-      },
-      child: Padding(
-        padding: EdgeInsets.only(bottom: 8, right: 8),
-        child: Icon(
-          _isSelected ? Icons.favorite : Icons.favorite_border_outlined,
-          color: _isSelected ? Colors.red : Colors.white,
-        ),
-      ),
-    );
+          );
+        });
   }
 }

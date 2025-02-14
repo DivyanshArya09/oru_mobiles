@@ -33,3 +33,8 @@ class MyApp extends StatelessWidget {
     );
   }
 }
+
+//! Things left
+// 1. Setup firbase Notifications 
+// 3. Add readme file for this project
+// 4. Make build for android

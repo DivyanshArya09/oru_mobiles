@@ -3,6 +3,7 @@ import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/features/home/presentation/screens/home_screen.dart';
 import 'package:oru_mobiles/themes/app_text_themes.dart';
+import 'package:oru_mobiles/utils/custom_spacers.dart';
 
 enum SnakBarType { success, error, info }
 
@@ -42,7 +43,14 @@ class ScaffoldHelper {
             topRight: Radius.circular(8),
           ),
         ),
-        builder: (context) => Padding(
+        builder: (context) => Container(
+          decoration: const BoxDecoration(
+            color: Colors.white,
+            borderRadius: BorderRadius.only(
+              topLeft: Radius.circular(8),
+              topRight: Radius.circular(8),
+            ),
+          ),
           padding: EdgeInsets.only(
             bottom: MediaQuery.of(context).viewInsets.bottom,
           ),
@@ -54,17 +62,18 @@ class ScaffoldHelper {
                 width: double.infinity,
                 padding: const EdgeInsets.symmetric(horizontal: 16),
                 decoration: BoxDecoration(
-                  color: Colors.white.withOpacity(.8),
+                  color: Colors.white,
                   borderRadius: const BorderRadius.only(
                     topLeft: Radius.circular(8),
                     topRight: Radius.circular(8),
                   ),
                   boxShadow: [
                     BoxShadow(
-                      color: Colors.black.withOpacity(0.06), // Shadow color
-                      offset: Offset(0, 2), // Shadow position
-                      blurRadius: 2, // Shadow blur radius
-                      spreadRadius: 0, // Shadow spread radius
+                      color: Colors.black.withOpacity(0.15), // Softer shadow
+                      offset: const Offset(0, -3), // Shift shadow down
+                      blurRadius: 10, // Increase blur for smoother effect
+                      spreadRadius:
+                          2, // Slight spread to make it more prominent
                     ),
                   ],
                 ),
@@ -85,6 +94,7 @@ class ScaffoldHelper {
                   ],
                 ),
               ),
+              CustomSpacers.height8,
               Container(
                 padding: const EdgeInsets.all(16),
                 color: ColorPalette.white,
