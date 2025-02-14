@@ -1,15 +1,20 @@
 import 'dart:async';
 
+import 'package:firebase_core/firebase_core.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter_screenutil/flutter_screenutil.dart';
 import 'package:oru_mobiles/core/constants/figma_constants.dart';
 import 'package:oru_mobiles/core/managers/app_manager.dart';
+import 'package:oru_mobiles/core/managers/push_notification_manager.dart';
 import 'package:oru_mobiles/features/onboarding/presentation/splash_screen.dart';
+import 'package:oru_mobiles/firebase_options.dart';
 import 'package:oru_mobiles/routes/custom_navigator.dart';
 import 'package:oru_mobiles/themes/app_themes.dart';
 
 Future<void> main() async {
   WidgetsFlutterBinding.ensureInitialized();
+  await Firebase.initializeApp(options: DefaultFirebaseOptions.currentPlatform);
+  await PushNotificationService.initialize();
   AppManager.initialize();
   runApp(const MyApp());
 }

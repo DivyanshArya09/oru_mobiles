@@ -5,6 +5,7 @@ import 'package:oru_mobiles/core/constants/app_assets.dart';
 import 'package:oru_mobiles/core/constants/color_palatte.dart';
 import 'package:oru_mobiles/core/helpers/scaffold_helper.dart';
 import 'package:oru_mobiles/core/helpers/user_helper.dart';
+import 'package:oru_mobiles/core/managers/push_notification_manager.dart';
 import 'package:oru_mobiles/features/home/presentation/blocs/filter_bloc/filter_bloc.dart';
 import 'package:oru_mobiles/features/home/presentation/blocs/home_bloc/home_bloc.dart';
 import 'package:oru_mobiles/features/home/presentation/widgets/best_deals_widget.dart';
@@ -52,11 +53,13 @@ class _HomeScreenState extends State<HomeScreen> {
     _searchTC = TextEditingController();
     _bloc = sl<HomeBloc>();
     _filterBloc = sl<FilterBloc>();
+
     WidgetsBinding.instance.addPostFrameCallback(
       (timeStamp) {
+        PushNotificationService.initNotification();
         _bloc.getMobileBrands().then((value) => _bloc.getFaqs());
-        _filterBloc.getFilters();
-        _filterBloc.getProducts();
+
+        _filterBloc.getFilters().then((value) => _filterBloc.getProducts());
       },
     );
     super.initState();

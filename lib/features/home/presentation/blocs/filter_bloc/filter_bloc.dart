@@ -93,6 +93,12 @@ class FilterBloc extends Cubit<FilterState> {
 
   void childLabelChanged(int parentIndex, int childIndex, bool isSelected) {
     emit(Trying());
+    if (isSelected == false) {
+      filters[parentIndex] = filters[parentIndex].copyWith(
+        isAllSelected: false,
+      );
+    }
+
     filters[parentIndex].options[childIndex] = filters[parentIndex]
         .options[childIndex]
         .copyWith(

@@ -31,7 +31,11 @@ class AuthRemoteDataSources {
         bodyData: entity.toMap(),
       );
       if (response.statusCode == 200) {
-        return UserModel.fromJson(response.data['user']);
+        try {
+          return UserModel.fromJson(response.data['user']);
+        } catch (e) {
+          throw ApiException(message: e.toString());
+        }
       } else {
         throw ApiException(message: response.data['error'] ?? 'Sever error');
       }

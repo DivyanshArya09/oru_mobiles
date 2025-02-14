@@ -96,20 +96,23 @@ class _CustomSideBarState extends State<CustomSideBar> {
                     buttonType: ButtonType.secondary,
                   ),
                   CustomSpacers.height70,
-                  InkWell(
-                    onTap: () => showLogoutDialog(context),
-                    child: Row(
-                      children: [
-                        CustomSpacers.width8,
-                        SvgPicture.asset(
-                          AppAssets.logoutIcon,
-                        ),
-                        CustomSpacers.width8,
-                        Text(
-                          'Logout',
-                          style: AppTextThemes.of(context).bodyLarge,
-                        ),
-                      ],
+                  Visibility(
+                    visible: UserHelper.getIsloggedIn() == true,
+                    child: InkWell(
+                      onTap: () => showLogoutDialog(context),
+                      child: Row(
+                        children: [
+                          CustomSpacers.width8,
+                          SvgPicture.asset(
+                            AppAssets.logoutIcon,
+                          ),
+                          CustomSpacers.width8,
+                          Text(
+                            'Logout',
+                            style: AppTextThemes.of(context).bodyLarge,
+                          ),
+                        ],
+                      ),
                     ),
                   )
                 ],
